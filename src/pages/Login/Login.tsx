@@ -9,13 +9,11 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [showSignup, setShowSignup] = useState(false);
   const [showLoginMail, setShowLoginMail] = useState(false);
 
-  // Dummy "existing email" for simulation
   const existingEmails = ["test@example.com", "user@dummy.com"];
 
   const handleContinue = () => {
     if (email.trim() === "") return;
 
-    // Check if email already exists
     if (existingEmails.includes(email.trim().toLowerCase())) {
       setShowLoginMail(true);
     } else {
@@ -23,19 +21,14 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     }
   };
 
-  if (showSignup) {
-    return <SignupPopup email={email} onClose={onClose} />;
-  }
-
-  if (showLoginMail) {
-    return <Loginmail onClose={onClose} />;
-  }
+  if (showSignup) return <SignupPopup email={email} onClose={onClose} />;
+  if (showLoginMail) return <Loginmail onClose={onClose} />;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
-      <div className="relative bg-white w-[360px] rounded-md shadow-lg border overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm px-2 sm:px-4">
+      <div className="relative bg-white w-full max-w-md sm:w-[90%] rounded-md shadow-lg border max-h-[95vh] overflow-y-auto">
         {/* Header */}
-        <div className="bg-[#0056D2] text-white text-center py-3 font-medium text-lg">
+        <div className="bg-[#0056D2] text-white text-center py-3 font-medium text-lg sticky top-0">
           Sign up or Log in
         </div>
 
@@ -52,30 +45,30 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <img
             src="https://cdn-icons-png.flaticon.com/512/744/744502.png"
             alt="login illustration"
-            className="w-40"
+            className="w-24 sm:w-32"
           />
         </div>
 
         {/* Text */}
-        <div className="text-center px-6">
-          <h2 className="text-lg font-semibold text-gray-800">
+        <div className="text-center px-4 sm:px-6">
+          <h2 className="text-base sm:text-lg font-semibold text-gray-800">
             Get the full experience
           </h2>
-          <p className="text-gray-500 text-sm mt-1 mb-4">
+          <p className="text-xs sm:text-sm mt-1 mb-4 text-gray-500">
             Save your favorites, schedule viewings, make offers and get access
             to member-only deals.
           </p>
         </div>
 
         {/* Buttons */}
-        <div className="flex flex-col gap-3 px-6">
+        <div className="flex flex-col gap-2 px-4 sm:px-6 pb-4">
           <button className="flex items-center justify-center gap-2 border text-gray-800 font-semibold py-2 rounded-md hover:bg-gray-50 transition">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.png"
               alt="google"
               className="w-5 h-5"
             />
-            CONTINUE WITH GOOGLE
+            <span className="text-sm sm:text-base">CONTINUE WITH GOOGLE</span>
           </button>
 
           <button className="flex items-center justify-center gap-2 bg-[#1877F2] text-white font-semibold py-2 rounded-md hover:bg-[#166FE0] transition">
@@ -84,7 +77,7 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               alt="facebook"
               className="w-5 h-5 bg-white rounded"
             />
-            CONTINUE WITH FACEBOOK
+            <span className="text-sm sm:text-base">CONTINUE WITH FACEBOOK</span>
           </button>
 
           <div className="flex items-center my-2">
@@ -93,7 +86,6 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             <hr className="flex-1 border-gray-300" />
           </div>
 
-          {/* Email Input */}
           <input
             type="email"
             placeholder="Email"
@@ -102,7 +94,6 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             className="border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
 
-          {/* Continue with Email Button */}
           <button
             onClick={handleContinue}
             className="bg-[#0056D2] text-white font-semibold py-2 rounded-md hover:bg-[#0045B0] transition"
@@ -112,7 +103,7 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="text-center text-xs text-gray-500 mt-4 mb-3 px-4">
+        <div className="text-center text-xs text-gray-500 mt-2 mb-3 px-4 pb-3 sm:pb-4">
           By continuing, you agree to Enlight{" "}
           <a href="#" className="text-blue-600 underline">
             Privacy Policy.
