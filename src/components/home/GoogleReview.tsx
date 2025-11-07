@@ -30,7 +30,7 @@ const GoogleReview: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-cover bg-blend-soft-light  py-10 px-4 sm:px-2 md:px-10 lg:px-20 overflow-x-hidden overflow-y-hidden">
+    <div className="bg-cover bg-blend-soft-light  py-8 px-4 sm:px-2 md:px-10 lg:px-20 overflow-x-hidden overflow-y-hidden">
       <div className="container mx-auto text-center mb-10">
         <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Google Reviews</h2>
       </div>

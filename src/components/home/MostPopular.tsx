@@ -28,7 +28,7 @@ const MostPopular: React.FC = () => {
 
   return (
     <div
-      className="container px-4 lg:px-30 sm:px-6 py-15 mx-auto"
+      className="container px-4 lg:px-30 sm:px-6 py-8 mx-auto"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
