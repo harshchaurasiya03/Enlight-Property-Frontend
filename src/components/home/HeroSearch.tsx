@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const HeroSearch = () => {
   const [activeTab, setActiveTab] = useState<"buy" | "rent" | "sell">("buy");
+  const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   return (
     <div
@@ -16,23 +17,30 @@ const HeroSearch = () => {
         </h1>
 
         {/* Tabs: Projects / Sale / Rent */}
-        <div className="flex justify-center bg-white rounded overflow-hidden w-fit mx-auto ">
-          {["Buy", "Rent", "Sell"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() =>
-                setActiveTab(tab.toLowerCase() as "buy" | "rent" | "sell")
-              }
-              className={`px-6 py-3 font-medium capitalize transition flex${
-                activeTab.toLowerCase() === tab.toLowerCase()
-                  ? "bg-white text-blue-600"
-                  : "bg-gray-600/40 text-black hover:bg-gray-300/40"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+        <div className="flex justify-center bg-black/30 backdrop-blur-md rounded-xl overflow-hidden w-fit mx-auto transition">
+  {["Buy", "Rent", "Sell"].map((tab) => (
+    <button
+      key={tab}
+      onClick={() =>
+        setActiveTab(tab.toLowerCase() as "buy" | "rent" | "sell")
+      }
+      onMouseEnter={() => setHoveredTab(tab.toLowerCase())}
+      onMouseLeave={() => setHoveredTab(null)}
+      className={`px-6 py-3 font-medium rounded-xl capitalize transition-all duration-300 ${
+        hoveredTab === tab.toLowerCase()
+          ? "bg-white text-blue-600"
+          : activeTab === tab.toLowerCase() && !hoveredTab
+          ? "bg-white text-blue-600"
+          : activeTab === tab.toLowerCase() && hoveredTab !== tab.toLowerCase()
+          ? " text-white"
+          : " text-white hover:bg-white hover:text-blue-600"
+      }`}
+    >
+      {tab}
+    </button>
+  ))}
+</div>
+
 
         {/* Search Bar */}
         <div className="bg-white rounded-lg shadow-lg flex max-w-2xl mx-auto mt-4 overflow-hidden">
