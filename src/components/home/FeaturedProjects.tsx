@@ -104,7 +104,7 @@ const LookingForProperties = () => {
           {popularRegions.map((region) => (
             <div
               key={region.id}
-              className="flex-shrink-0 w-[700px] h-[400px] bg-white rounded-xl shadow-lg overflow-hidden flex"
+              className="shrink-0 w-[700px] h-[400px] bg-white rounded-xl shadow-lg overflow-hidden flex"
             >
               {/* Left: Main City */}
               <div className="w-1/2 h-full p-3">
