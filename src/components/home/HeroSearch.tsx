@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const HeroSearch = () => {
   const [activeTab, setActiveTab] = useState<"buy" | "rent" | "sell">("buy");
+  const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
 
   return (
@@ -13,23 +14,27 @@ const HeroSearch = () => {
       <div className="absolute inset-0 bg-black/40" />
       <div className="relative z-10 max-w-4xl mx-auto text-center text-white">
         <h1 className="text-2xl md:text-4xl font-bold mb-24">
-  Find your favorite homes at Enlight Property
-</h1>
-
-    
+          Find your favorite homes at Enlight Property
+        </h1>
 
         {/* Tabs: Projects / Sale / Rent */}
-       <div className="flex justify-center bg-white rounded-t-lg overflow-hidden w-fit mx-auto ">
+        <div className="flex justify-center bg-black/30 backdrop-blur-md rounded-xl overflow-hidden w-fit mx-auto transition">
   {["Buy", "Rent", "Sell"].map((tab) => (
     <button
       key={tab}
       onClick={() =>
         setActiveTab(tab.toLowerCase() as "buy" | "rent" | "sell")
       }
-      className={`px-6 py-3 font-medium capitalize transition flex ${
-        activeTab.toLowerCase() === tab.toLowerCase()
+      onMouseEnter={() => setHoveredTab(tab.toLowerCase())}
+      onMouseLeave={() => setHoveredTab(null)}
+      className={`px-6 py-3 font-medium rounded-xl capitalize transition-all duration-300 ${
+        hoveredTab === tab.toLowerCase()
           ? "bg-white text-blue-600"
-          : "bg-gray-600/40 text-black hover:bg-gray-300/40"
+          : activeTab === tab.toLowerCase() && !hoveredTab
+          ? "bg-white text-blue-600"
+          : activeTab === tab.toLowerCase() && hoveredTab !== tab.toLowerCase()
+          ? " text-white"
+          : " text-white hover:bg-white hover:text-blue-600"
       }`}
     >
       {tab}
