@@ -124,10 +124,12 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           {err && <p className="text-red-600 text-xs">{err}</p>}
 
           <button
-            type="submit"
+            type="button"
             disabled={checking}
+             onClick={handleContinue}
             className="bg-[#0056D2] disabled:opacity-60 text-white font-semibold py-2 rounded-md hover:bg-[#0045B0] transition"
           >
+           
             {checking ? "Checking..." : "Continue with Email"}
           </button>
         </div>
