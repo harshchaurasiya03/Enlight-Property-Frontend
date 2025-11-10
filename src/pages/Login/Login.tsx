@@ -68,7 +68,7 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <img
             src="https://cdn-icons-png.flaticon.com/512/744/744502.png"
             alt="login illustration"
-            className="w-40"
+            className="w-24 sm:w-32"
           />
         </div>
 
@@ -82,11 +82,11 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <div className="flex flex-col gap-3 px-6">
           <button className="flex items-center justify-center gap-2 border text-gray-800 font-semibold py-2 rounded-md hover:bg-gray-50 transition">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.png"
+              src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg"
               alt="google"
               className="w-5 h-5"
             />
-            CONTINUE WITH GOOGLE
+            <span className="text-sm sm:text-base">CONTINUE WITH GOOGLE</span>
           </button>
 
           <button className="flex items-center justify-center gap-2 bg-[#1877F2] text-white font-semibold py-2 rounded-md hover:bg-[#166FE0] transition">
@@ -95,7 +95,7 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               alt="facebook"
               className="w-5 h-5 bg-white rounded"
             />
-            CONTINUE WITH FACEBOOK
+            <span className="text-sm sm:text-base">CONTINUE WITH FACEBOOK</span>
           </button>
 
           <div className="flex items-center my-2">
@@ -110,6 +110,7 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
           />
 
           {err && <p className="text-red-600 text-xs">{err}</p>}

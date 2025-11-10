@@ -26,7 +26,7 @@ const HeroSearch = () => {
       }
       onMouseEnter={() => setHoveredTab(tab.toLowerCase())}
       onMouseLeave={() => setHoveredTab(null)}
-      className={`px-6 py-3 font-medium rounded-xl capitalize transition-all duration-300 ${
+      className={`px-8 py-3 font-medium rounded-xl capitalize transition-all duration-300 ${
         hoveredTab === tab.toLowerCase()
           ? "bg-white text-blue-600"
           : activeTab === tab.toLowerCase() && !hoveredTab
@@ -47,7 +47,7 @@ const HeroSearch = () => {
           <input
             type="text"
             placeholder="Search by location, station, project or unit ID"
-            className="flex-1 px-4 py-3 text-gray-800 focus:outline-none"
+            className="flex-1 px-4 py-3 focus:outline-none sm:px-4 sm:py-3 text-gray-800 text-sm sm:text-base"
           />
           <button className="bg-blue-600 hover:bg-blue-700 px-6 flex items-center justify-center text-white">
             <Search size={20} />

@@ -1,9 +1,12 @@
 import { Plus, Menu, Heart, User, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Login from "../pages/Login/Login";
 
 const MainNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-40">
@@ -26,22 +29,22 @@ const MainNavbar = () => {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
             <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
+              Buy
+            </a>
+            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
+              Rent
+            </a>
+            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
+              Sell
+            </a>
+            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
+              Rent-To-Own
+            </a>
+            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
               Projects
             </a>
             <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
-              Properties
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
-              Agents
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
-              News
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
-              Careers
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
-              Contact
+              Advice
             </a>
 
             <button className="flex items-center space-x-2 text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium transition">
@@ -68,22 +71,22 @@ const MainNavbar = () => {
           <div className="px-4 py-3 space-y-2">
             {/* Main Nav Links */}
             <a href="#" className="block text-gray-700 hover:text-blue-600">
+              Buy
+            </a>
+            <a href="#" className="block text-gray-700 hover:text-blue-600">
+              Rent
+            </a>
+            <a href="#" className="block text-gray-700 hover:text-blue-600">
+              Sell
+            </a>
+            <a href="#" className="block text-gray-700 hover:text-blue-600">
+              Rent-To-Own
+            </a>
+            <a href="#" className="block text-gray-700 hover:text-blue-600">
               Projects
             </a>
             <a href="#" className="block text-gray-700 hover:text-blue-600">
-              Properties
-            </a>
-            <a href="#" className="block text-gray-700 hover:text-blue-600">
-              Agents
-            </a>
-            <a href="#" className="block text-gray-700 hover:text-blue-600">
-              News
-            </a>
-            <a href="#" className="block text-gray-700 hover:text-blue-600">
-              Careers
-            </a>
-            <a href="#" className="block text-gray-700 hover:text-blue-600">
-              Contact
+              Advice
             </a>
 
             {/* Add Property Button */}
@@ -113,13 +116,14 @@ const MainNavbar = () => {
               </div>
 
               {/* Login */}
-              <Link
-                to="/signin"
-                className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition"
-              >
-                <User size={16} />
-                <span>Login</span>
-              </Link>
+              <button
+              onClick={() => setShowLogin(true)}
+              className="flex items-center space-x-1 hover:text-blue-300 transition"
+            >
+              <User size={16} />
+              <span>Login</span>
+            </button>
+            {showLogin && <Login onClose={() => setShowLogin(false)} />}
             </div>
           </div>
         </div>

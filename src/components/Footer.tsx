@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
     <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-6 lg:px-30 mt-10">
         {/* Main Grid */}
-        <div className="w-full px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div className="w-full px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
           {/* Section 1 */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Real Estate Market</h3>
@@ -64,9 +64,9 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-700 py-6 px-4 sm:px-8 lg:px-16 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-gray-700 py-6 px-4 sm:px-8 lg:px-16 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center">
           {/* Left Links */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-4 text-gray-400 text-sm mb-4 md:mb-0">
+          <div className="flex flex-wrap justify-start gap-4 text-gray-400 text-sm mb-4 md:mb-0">
             <span className="hover:text-white cursor-pointer">Privacy</span>
             <span className="hover:text-white cursor-pointer">Terms</span>
             <span className="hover:text-white cursor-pointer">Cookies</span>
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Right Copyright */}
-          <div className="text-gray-400 text-sm text-center md:text-right">
+          <div className="text-gray-400 text-sm text-left md:text-right">
             Copyrights © 2025, Enlight Group
           </div>
         </div>
