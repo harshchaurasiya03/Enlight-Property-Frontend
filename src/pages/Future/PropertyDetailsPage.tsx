@@ -140,7 +140,7 @@ function ProjectOverview() {
         <div>
           <ul className="space-y-2 text-sm">
             <li>
-              <span className="font-semibold">Status:</span> <span className="inline-block bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded ml-2 text-xs">Selling</span>
+              <span className="font-semibold">Status:</span> <span className="inline-block bg-emerald-100 text-blue-700 px-2 py-0.5 rounded ml-2 text-xs">Selling</span>
             </li>
             <li>
               <span className="font-semibold">Category:</span> Condo
@@ -218,7 +218,7 @@ function ProjectContactForm() {
       <input value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} className="w-full border rounded px-3 py-2 text-sm mt-1 mb-3" placeholder="email@example.com" />
       <label className="text-sm text-gray-600">Message *</label>
       <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} className="w-full border rounded px-3 py-2 text-sm mt-1 mb-4 h-28 resize-none" placeholder="Enter your message..." />
-      <button className="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 rounded">Send Message</button>
+      <button className="w-full bg-blue-600 hover:bg-teal-700 text-white py-2 rounded">Send Message</button>
     </div>
   );
 }
@@ -292,7 +292,7 @@ function RelatedProperties({ items }: { items: RelatedProperty[] }) {
                 <h4 className="font-semibold text-sm">{it.title}</h4>
                 <p className="text-xs text-gray-500">{it.location}</p>
               </div>
-              <div className="text-sm font-semibold text-teal-600">{it.price}</div>
+              <div className="text-sm font-semibold text-blue-600">{it.price}</div>
             </div>
             <div className="mt-3 text-xs text-gray-500 flex items-center gap-3">
               <div>🛏 {it.beds}</div>
