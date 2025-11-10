@@ -26,8 +26,8 @@ import Blank from "./pages/Dashboard/Blank";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/dashboard/common/ScrollToTop";
 import DashboardHome from "./pages/Dashboard/Dashboard/Home";
-import Bangkok from "./pages/Future/Bangkok";
 import RequireAuth from "./routes/RequireAuth";
+import PropertyDetailsPage from "./pages/Future/PropertyDetailsPage";
 
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/bangkok" element={<Bangkok />} />
+        <Route path="/propertydeatilspage" element={<PropertyDetailsPage />} />
 
         <Route element={<RequireAuth />}>
           <Route path="/dashboard" element={<AppLayout />}>

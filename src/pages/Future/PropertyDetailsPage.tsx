@@ -291,7 +291,7 @@ function ProjectVideo() {
       <div className="w-full aspect-video bg-black rounded overflow-hidden flex items-center justify-center">
         {/* Replace with your video or embed */}
         <video controls className="w-full h-full object-cover">
-          <source src="/your-video.mp4" type="video/mp4" />
+          <source src="/videos/PropertyCarousel/v3.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
