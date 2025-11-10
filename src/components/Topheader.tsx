@@ -35,7 +35,7 @@ const TopHeader = () => {
       <div style={{ height: `${headerHeight}px` }} />
 
       <div
-        className={`lg:block bg-blue-900 text-white text-sm py-2 px-4 fixed top-0 w-full z-50 transition-transform duration-300 ${
+        className={`hidden sm:block lg:block bg-blue-900 text-white text-sm py-2 px-4 fixed top-0 w-full z-50 transition-transform duration-300 ${
           visible ? "translate-y-0" : "-translate-y-full"
         }`}
       >

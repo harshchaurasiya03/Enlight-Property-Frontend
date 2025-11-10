@@ -13,6 +13,7 @@ import MustSellProperty from '../../components/home/MustSellProperty'
 import NewsProperty from '../../components/home/NewsProperty';
 import ThailandSecrets from '../../components/home/ThailandSecrets';
 import Topheader from '../../components/Topheader'
+import PropertyCarousel from '../../components/home/PropertyCarousel';
 
 
 const HomePage = () => {
@@ -22,7 +23,7 @@ const HomePage = () => {
       <Navbar />
       <HeroSearch />
       <FeaturedProjects />
-      {/* <PropertyCarousel /> */}
+      <PropertyCarousel />
       <SplitCard/>
       <RentToOwn/>
       <FutureProjects/>
