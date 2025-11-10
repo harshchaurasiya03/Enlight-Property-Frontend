@@ -1,45 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
+import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
-
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
+import { checkEmailExists } from "../../redux/actions/authAction";
 import SignupPopup from "./SignupPopup";
 import Loginmail from "./Loginmail";
 
 const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const { user } = useSelector((state: RootState) => state.auth); // 👈 access logged-in user
   const [email, setEmail] = useState("");
   const [showSignup, setShowSignup] = useState(false);
   const [showLoginMail, setShowLoginMail] = useState(false);
+  const [checking, setChecking] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
 
-  // Dummy "existing email" for simulation
-  const existingEmails = ["test@example.com", "user@dummy.com"];
+  // ✅ If user already logged in, redirect immediately
+  useEffect(() => {
+    if (user) {
+      onClose(); // close popup
+      navigate("/dashboard", { replace: true }); // go to dashboard
+    }
+  }, [user, navigate, onClose]);
 
-  const handleContinue = () => {
-    if (email.trim() === "") return;
+  const handleContinue = async () => {
+    setErr(null);
+    if (!email.trim()) {
+      setErr("Please enter an email.");
+      return;
+    }
 
-    // Check if email already exists
-    if (existingEmails.includes(email.trim().toLowerCase())) {
-      setShowLoginMail(true);
-    } else {
-      setShowSignup(true);
+    setChecking(true);
+    try {
+      const exists = await dispatch(checkEmailExists(email.trim().toLowerCase()));
+      if (exists) setShowLoginMail(true);
+      else setShowSignup(true);
+    } catch {
+      setErr("Something went wrong. Please try again.");
+    } finally {
+      setChecking(false);
     }
   };
 
-  if (showSignup) {
-    return <SignupPopup email={email} onClose={onClose} />;
-  }
-
-  if (showLoginMail) {
-    return <Loginmail onClose={onClose} />;
-  }
+  if (showSignup) return <SignupPopup email={email} onClose={onClose} />;
+  if (showLoginMail) return <Loginmail email={email} onClose={onClose} />;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
       <div className="relative bg-white w-[360px] rounded-md shadow-lg border overflow-hidden">
-        {/* Header */}
         <div className="bg-[#0056D2] text-white text-center py-3 font-medium text-lg">
           Sign up or Log in
         </div>
 
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-white bg-black/40 rounded-full p-1 hover:bg-black/60"
@@ -47,7 +64,6 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <X size={16} />
         </button>
 
-        {/* Image Section */}
         <div className="flex justify-center py-4">
           <img
             src="https://cdn-icons-png.flaticon.com/512/744/744502.png"
@@ -56,18 +72,13 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           />
         </div>
 
-        {/* Text */}
         <div className="text-center px-6">
-          <h2 className="text-lg font-semibold text-gray-800">
-            Get the full experience
-          </h2>
+          <h2 className="text-lg font-semibold text-gray-800">Get the full experience</h2>
           <p className="text-gray-500 text-sm mt-1 mb-4">
-            Save your favorites, schedule viewings, make offers and get access
-            to member-only deals.
+            Save your favorites, schedule viewings, make offers and get access to member-only deals.
           </p>
         </div>
 
-        {/* Buttons */}
         <div className="flex flex-col gap-3 px-6">
           <button className="flex items-center justify-center gap-2 border text-gray-800 font-semibold py-2 rounded-md hover:bg-gray-50 transition">
             <img
@@ -93,7 +104,6 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             <hr className="flex-1 border-gray-300" />
           </div>
 
-          {/* Email Input */}
           <input
             type="email"
             placeholder="Email"
@@ -102,16 +112,17 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             className="border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
 
-          {/* Continue with Email Button */}
+          {err && <p className="text-red-600 text-xs">{err}</p>}
+
           <button
             onClick={handleContinue}
-            className="bg-[#0056D2] text-white font-semibold py-2 rounded-md hover:bg-[#0045B0] transition"
+            disabled={checking}
+            className="bg-[#0056D2] disabled:opacity-60 text-white font-semibold py-2 rounded-md hover:bg-[#0045B0] transition"
           >
-            Continue with Email
+            {checking ? "Checking..." : "Continue with Email"}
           </button>
         </div>
 
-        {/* Footer */}
         <div className="text-center text-xs text-gray-500 mt-4 mb-3 px-4">
           By continuing, you agree to Enlight{" "}
           <a href="#" className="text-blue-600 underline">
