@@ -1,4 +1,3 @@
-import Navbar from '../../components/Navbar';
 import HeroSearch from '../../components/home/HeroSearch';
 import FeaturedProjects from '../../components/home/FeaturedProjects';
 import Footer from '../../components/Footer';
@@ -12,18 +11,17 @@ import MostPopular from '../../components/home/MostPopular';
 import MustSellProperty from '../../components/home/MustSellProperty'
 import NewsProperty from '../../components/home/NewsProperty';
 import ThailandSecrets from '../../components/home/ThailandSecrets';
-import Topheader from '../../components/Topheader'
 import PropertyCarousel from '../../components/home/PropertyCarousel';
+import Navbarx from '../../components/Navbarx';
 
 
 const HomePage = () => {
   return (
     <div className="min-h-screen bg-white">
-      <Topheader/>
-      <Navbar />
+      <Navbarx/>
       <HeroSearch />
       <FeaturedProjects />
-      <PropertyCarousel />
+      {/* <PropertyCarousel /> */}
       <SplitCard/>
       <RentToOwn/>
       <FutureProjects/>
