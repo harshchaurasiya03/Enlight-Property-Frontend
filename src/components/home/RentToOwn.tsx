@@ -41,7 +41,7 @@ const RentToOwn: React.FC = () => {
   ];
 
   return (
-    <div className="container px-4 sm:px-6 lg:px-30 py-8 mx-auto">
+    <div className="container px-4 sm:px-6  py-8 mx-auto">
       {/* Main Heading */}
       <div className="text-left mb-6 sm:mb-12">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
