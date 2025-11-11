@@ -1,7 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { Plus, Menu, Heart, User, ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+// import type { RootState } from "../../redux/store";
 import Login from "../pages/Login/Login";
+import { RootState } from "../redux/store";
 
 // ---------- TopHeader Component ----------
 const TopHeader = () => {
@@ -47,8 +50,21 @@ const TopHeader = () => {
 
 // ---------- Navbar Component ----------
 const NavbarX = () => {
+  const navigate = useNavigate();
+  const { user } = useSelector((state: RootState) => state.auth);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+
+  // ---------- Handle Add Property Click ----------
+  const handleAddPropertyClick = () => {
+    if (user) {
+      navigate("/dashboard/PropertyTable");
+    } else {
+      setShowLogin(true);
+    }
+  };
+
+  const menuItems = ["Buy", "Rent", "Sell", "Rent-To-Own", "Projects", "Advice"];
 
   return (
     <div className="bg-white shadow-sm w-full">
@@ -63,7 +79,7 @@ const NavbarX = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
-            {["Buy", "Rent", "Sell", "Rent-To-Own", "Projects", "Advice"].map((item) => (
+            {menuItems.map((item) => (
               <a
                 key={item}
                 href="#"
@@ -74,7 +90,7 @@ const NavbarX = () => {
             ))}
 
             <button
-              onClick={() => setShowLogin(true)}
+              onClick={handleAddPropertyClick}
               className="flex items-center space-x-2 text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium transition"
             >
               <Plus size={18} />
@@ -98,14 +114,14 @@ const NavbarX = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t shadow-inner">
           <div className="px-4 py-3 space-y-2">
-            {["Buy", "Rent", "Sell", "Rent-To-Own", "Projects", "Advice"].map((item) => (
+            {menuItems.map((item) => (
               <a key={item} href="#" className="block text-gray-700 hover:text-blue-600">
                 {item}
               </a>
             ))}
 
             <button
-              onClick={() => setShowLogin(true)}
+              onClick={handleAddPropertyClick}
               className="flex items-center space-x-2 text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium transition"
             >
               <Plus size={18} />
@@ -140,7 +156,8 @@ const NavbarX = () => {
         </div>
       )}
 
-      {showLogin && <Login onClose={() => setShowLogin(false)} />}
+      {/* Login Modal */}
+      {showLogin && <Login onClose={() => setShowLogin(false)} redirectTo="/postproperty" />}
     </div>
   );
 };
@@ -190,9 +207,7 @@ const HeaderWrapper = () => {
       </div>
 
       {/* Navbar */}
-      <div>
-        <NavbarX />
-      </div>
+      <NavbarX />
     </div>
   );
 };

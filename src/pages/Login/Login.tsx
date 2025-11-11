@@ -8,25 +8,34 @@ import SignupPopup from "./SignupPopup";
 import Loginmail from "./Loginmail";
 import OAuth from "./OAuth";
 
-const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+// ---------- Define Props ----------
+interface LoginProps {
+  onClose: () => void;
+  redirectTo?: string; // optional: where to navigate after login
+}
+
+// ---------- Login Component ----------
+const Login: React.FC<LoginProps> = ({ onClose, redirectTo }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-
   const { user } = useSelector((state: RootState) => state.auth);
+
   const [email, setEmail] = useState("");
   const [showSignup, setShowSignup] = useState(false);
   const [showLoginMail, setShowLoginMail] = useState(false);
   const [checking, setChecking] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
-
+  // ---------- Redirect after login ----------
   useEffect(() => {
     if (user) {
       onClose();
-      navigate("/dashboard/profile", { replace: true });
+      if (redirectTo) navigate(redirectTo, { replace: true });
+      else navigate("/dashboard/profile", { replace: true });
     }
-  }, [user, navigate, onClose]);
+  }, [user, navigate, onClose, redirectTo]);
 
+  // ---------- Handle Email Continue ----------
   const handleContinue = async () => {
     setErr(null);
     if (!email.trim()) {
@@ -48,9 +57,11 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     }
   };
 
+  // ---------- Show Signup / LoginMail if needed ----------
   if (showSignup) return <SignupPopup email={email} onClose={onClose} />;
   if (showLoginMail) return <Loginmail email={email} onClose={onClose} />;
 
+  // ---------- Main Login Modal ----------
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
       <div className="relative bg-white w-[360px] rounded-md shadow-lg border overflow-hidden">
@@ -85,20 +96,8 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
         <div className="flex flex-col gap-3 px-6">
           <button>
-            <OAuth/>
+            <OAuth />
           </button>
-{/* 
-          <button
-            type="button"
-            className="flex items-center justify-center gap-2 bg-[#1877F2] text-white font-semibold py-2 rounded-md hover:bg-[#166FE0] transition"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"
-              alt="facebook"
-              className="w-5 h-5 bg-white rounded"
-            />
-            <span className="text-sm sm:text-base">CONTINUE WITH FACEBOOK</span>
-          </button> */}
 
           <div className="flex items-center my-2">
             <hr className="flex-1 border-gray-300" />
@@ -115,8 +114,8 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             required
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                e.preventDefault(); // prevent default form weirdness
-                handleContinue(); // call your function directly
+                e.preventDefault();
+                handleContinue();
               }
             }}
           />
@@ -126,10 +125,9 @@ const Login: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <button
             type="button"
             disabled={checking}
-             onClick={handleContinue}
+            onClick={handleContinue}
             className="bg-[#0056D2] disabled:opacity-60 text-white font-semibold py-2 rounded-md hover:bg-[#0045B0] transition"
           >
-           
             {checking ? "Checking..." : "Continue with Email"}
           </button>
         </div>
