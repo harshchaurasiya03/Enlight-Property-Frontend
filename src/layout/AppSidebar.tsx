@@ -42,7 +42,7 @@ const navItems: NavItem[] = [
   },
   
   {
-    name: "Tables",
+    name: "Property",
     icon: <TableIcon />,
     subItems: [
       { name: "Property tables", path: "/dashboard/PropertyTable", pro: false }
