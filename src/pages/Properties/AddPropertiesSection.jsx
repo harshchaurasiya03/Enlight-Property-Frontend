@@ -50,7 +50,7 @@ export default function AddProduct() {
             </div>
 
             <div className="flex flex-col space-y-1">
-              <label className="text-sm text-gray-600">Color</label>
+              <label className="text-sm text-gray-600">Floor</label>
               <select className="border border-gray-300 rounded-xl px-3 py-2 text-gray-600 focus:ring-2 focus:ring-blue-500 outline-none">
                 <option>Parking</option>
                 <option>Yes</option>

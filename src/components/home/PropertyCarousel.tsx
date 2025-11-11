@@ -67,10 +67,7 @@ const PropertyCarousel: React.FC = () => {
                   className="absolute top-0 left-0 w-full h-full object-cover"
                 />
               </div>
-              {/* Caption */}
-              <div className="h-20 flex items-center justify-center text-center font-semibold text-xs sm:text-sm">
-                Property - {index + 1}
-              </div>
+              
             </div>
           ))}
         </div>

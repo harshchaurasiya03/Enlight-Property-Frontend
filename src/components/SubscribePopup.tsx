@@ -25,7 +25,7 @@ const SubscribePopup: React.FC<SubscribePopupProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40"
+      className="fixed inset-0 z-9999 flex items-center justify-center bg-black/40"
       aria-modal="true"
       role="dialog"
     >
@@ -55,7 +55,7 @@ const SubscribePopup: React.FC<SubscribePopupProps> = ({
                 console.error("handleClose threw:", err);
               }
             }}
-            className="absolute top-2 right-2 text-white bg-black/40 rounded-full p-1 hover:bg-black/70 z-[10000]"
+            className="absolute top-2 right-2 text-white bg-black/40 rounded-full p-1 hover:bg-black/70 z-10000"
           >
             <X size={18} />
           </button>
