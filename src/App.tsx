@@ -1,6 +1,4 @@
-// App.tsx
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./redux/actions/authAction";
 import type { AppDispatch } from "./redux/store";
@@ -29,17 +27,29 @@ import RequireAuth from "./routes/RequireAuth";
 import PropertyDetailsPage from "./pages/Future/PropertyDetailsPage";
 import VerifyEmailPage from "./pages/Auth/VerifyEmailPage";
 import Chatbot from "./components/Chatbot";
+import SubscribePopup from "./components/SubscribePopup";
+import PostProperty from "./pages/Properties/PostProperty";
 
 function App() {
 
   const dispatch = useDispatch<AppDispatch>();
+  const [showPopup, setShowPopup] = useState(true);
   useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
+   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
 
   return (
     <>
       <ScrollToTop />
+        {showPopup && (
+        <SubscribePopup
+          handleClose={() => setShowPopup(false)} // <-- Pass handleClose here
+        />
+      )}
       <Chatbot/>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -60,6 +70,8 @@ function App() {
 
             {/* Tables */}
             <Route path="basic-tables" element={<BasicTables />} />
+            <Route path="PropertyTable" element={<PostProperty />} />
+
 
             {/* UI Elements */}
             <Route path="alerts" element={<Alerts />} />

@@ -20,10 +20,12 @@
     "@react-jvectormap/core": "^1.0.4",
     "@react-jvectormap/world": "^1.1.2",
     "@reduxjs/toolkit": "^2.10.1",
+    "@shadcn/ui": "^0.0.4",
     "@supabase/supabase-js": "^2.76.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "apexcharts": "^5.3.5",
     "axios": "^1.13.2",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "firebase": "^12.5.0",
     "flatpickr": "^4.6.13",
@@ -39,8 +41,8 @@
     "react-router-dom": "^7.9.5",
     "sweetalert2": "^11.26.3",
     "swiper": "^12.0.3",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.0.0",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.17",
     "vite-plugin-svgr": "^4.5.0"
   },
   "devDependencies": {

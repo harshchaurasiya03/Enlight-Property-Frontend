@@ -16,7 +16,7 @@ const Chatbot = () => {
       text: "What type of property are you interested in?",
       options: ["Residential Apartment", "Villa", "Commercial Property", "Plot/Land"],
     },
-    { text: "Which location or city are you looking in?", options: ["Gurgaon", "Noida", "Greater Noida", "Delhi"] },
+    { text: "Which location or city are you looking in?", options: ["Bangkok", "Thailand", "Bali", "Pattaya"] },
     { text: "What is your budget range?", options: ["₹50L–1Cr", "₹1–3Cr", "₹3–5Cr", "₹5Cr+"] },
     { text: "When do you plan to make your Purchase/Rent/Buy?", options: ["Immediately", "Within 3 months", "3–6 months", "After 6 months"] },
     { text: "Do you need home loan assistance or financial guidance?", options: ["Yes", "No"] },
