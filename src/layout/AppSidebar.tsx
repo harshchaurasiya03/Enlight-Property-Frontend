@@ -36,6 +36,11 @@ const navItems: NavItem[] = [
     path: "/dashboard/profile",
   },
   {
+    name: "User Management",
+    icon: <TableIcon />,
+    subItems: [{ name: "User Tables", path: "/dashboard/basic-tables", pro: false }],
+  },
+  {
     name: "Forms",
     icon: <ListIcon />,
     subItems: [{ name: "Form Elements", path: "/dashboard/form-elements", pro: false }],
