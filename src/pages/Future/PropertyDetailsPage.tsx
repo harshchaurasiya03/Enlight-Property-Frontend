@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import MainNavbar from "../../components/Navbar";
-import TopHeader from "../../components/Topheader";
+import Navbarx from '../../components/Navbarx';
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
 // Related properties type
@@ -64,8 +63,7 @@ export default function PropertyDetailsPage() {
 
   return (
     <div className="min-h-screen bg-white text-gray-800">
-      <TopHeader />
-      <MainNavbar />
+      <Navbarx />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <HeroGallery project={displayProject} />
