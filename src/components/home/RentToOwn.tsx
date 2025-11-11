@@ -58,7 +58,7 @@ const RentToOwn: React.FC = () => {
         {cards.map((card, idx) => (
           <div
             key={idx}
-            className="flex-shrink-0 w-64 sm:w-auto bg-white rounded-xl shadow-lg flex flex-col items-center p-4 sm:p-6 h-[250px] sm:h-[300px]"
+            className="shrink-0 w-64 sm:w-auto bg-white rounded-xl shadow-lg flex flex-col items-center p-4 sm:p-6 h-[250px] sm:h-[300px]"
           >
             {/* Icon */}
             <div className="flex-1 flex items-center justify-center">{card.icon}</div>
