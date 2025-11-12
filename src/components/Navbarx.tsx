@@ -64,7 +64,7 @@ const NavbarX = () => {
     }
   };
 
-  const menuItems = ["Buy", "Rent", "Sell", "Rent-To-Own", "Projects", "Advice"];
+  const menuItems = ["Buy", "Rent", "Sell", "Rent-To-Own", "Projects", "Advice", "Blog"];
 
   return (
     <div className="bg-white shadow-sm w-full">
@@ -78,16 +78,7 @@ const NavbarX = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-6">
-            {menuItems.map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="text-gray-700 hover:text-blue-600 font-medium"
-              >
-                {item}
-              </a>
-            ))}
+          <div className="hidden md:flex items-center space-x-6"> {menuItems.map((item) => item === "Blog" ? ( <Link key={item} to="/blog" className="text-gray-700 hover:text-blue-600 font-medium" > {item} </Link> ) : ( <a key={item} href="#" className="text-gray-700 hover:text-blue-600 font-medium" > {item} </a> ) )}
 
             <button
               onClick={handleAddPropertyClick}

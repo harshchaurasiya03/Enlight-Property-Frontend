@@ -29,6 +29,8 @@ import VerifyEmailPage from "./pages/Auth/VerifyEmailPage";
 import Chatbot from "./components/Chatbot";
 import SubscribePopup from "./components/SubscribePopup";
 import PostProperty from "./pages/Properties/PostProperty";
+import Blog from "./pages/blog/Blog";
+import BlogDetails from "./pages/blog/BlogDetails";
 
 function App() {
 
@@ -47,12 +49,14 @@ function App() {
       <ScrollToTop />
         {showPopup && (
         <SubscribePopup
-          handleClose={() => setShowPopup(false)} // <-- Pass handleClose here
+          // handleClose={() => setShowPopup(false)} // <-- Pass handleClose here
         />
       )}
       <Chatbot/>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/blog" element={<Blog/>} />
+        <Route path="/blog/:id" element={<BlogDetails />} />
         <Route path="/propertydeatilspage" element={<PropertyDetailsPage />} />
         <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
 

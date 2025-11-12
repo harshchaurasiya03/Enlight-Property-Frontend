@@ -7,7 +7,7 @@ const HeroSearch = () => {
 
   return (
     <div
-      className="relative bg-cover bg-center py-36 px-4 sm:px-6 lg:px-8"
+      className="relative bg-cover bg-center py-36 px-4 sm:px-6 lg:px-8 mt-20"
       style={{ backgroundImage: "url('/images/banner.jpeg')" }}
     >
       <div className="absolute inset-0 " />
