@@ -1,7 +1,6 @@
 import PageBreadcrumb from "../../components/dashboard/common/PageBreadCrumb";
 import UserMetaCard from "../../components/dashboard/UserProfile/UserMetaCard";
 import UserInfoCard from "../../components/dashboard/UserProfile/UserInfoCard";
-import UserAddressCard from "../../components/dashboard/UserProfile/UserAddressCard";
 import PageMeta from "../../components/dashboard/common/PageMeta";
 
 export default function UserProfiles() {

@@ -49,6 +49,14 @@ const navItems: NavItem[] = [
     ],
   },
   {
+    name: "Blog",
+    icon: <TableIcon />,
+    subItems: [
+      { name: "Blog", path: "/dashboard/Blog", pro: false }
+    ],
+  },
+  
+  {
     name: "Forms",
     icon: <ListIcon />,
     subItems: [{ name: "Form Elements", path: "/dashboard/form-elements", pro: false }],

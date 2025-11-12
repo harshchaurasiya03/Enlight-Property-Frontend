@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Navbarx from "../../components/Navbarx";
 import Footer from "../../components/Footer";
@@ -15,6 +15,7 @@ type Property = {
 
 const CityProperty: React.FC = () => {
   const { cityName } = useParams();
+  const navigate = useNavigate();
 
   const [hovered, setHovered] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -266,6 +267,16 @@ const CityProperty: React.FC = () => {
                   <div
                     key={pidx}
                     className="flex-none w-64 md:w-72 lg:w-80 cursor-pointer"
+                    onClick={() =>
+                      navigate(`/propertydeatilspage`, {
+                        state: {
+                          projectName: property.society,
+                          societyName: property.society,
+                          location: property.location,
+                          image: property.image,
+                        },
+                      })
+                    }
                   >
                     <div className="rounded-xl overflow-hidden h-40 md:h-48 lg:h-56 mb-2">
                       <img

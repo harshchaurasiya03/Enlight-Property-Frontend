@@ -32,6 +32,7 @@ import PostProperty from "./pages/Properties/PostProperty";
 import Blog from "./pages/blog/Blog";
 import BlogDetails from "./pages/blog/BlogDetails";
 import CityProperty from "./pages/Properties/CityProperty";
+import BlogDashboard from "./pages/blog/BlogDashboard";
 
 function App() {
 
@@ -77,6 +78,7 @@ function App() {
             {/* Tables */}
             <Route path="basic-tables" element={<BasicTables />} />
             <Route path="PropertyTable" element={<PostProperty />} />
+            <Route path="Blog" element={<BlogDashboard/>} />
 
 
             {/* UI Elements */}
