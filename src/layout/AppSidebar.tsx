@@ -53,6 +53,15 @@ const navItems: NavItem[] = [
   },
   {
     name: "Home Listings",
+    name: "Blog",
+    icon: <TableIcon />,
+    subItems: [
+      { name: "Blog", path: "/dashboard/Blog", pro: false }
+    ],
+  },
+  
+  {
+    name: "Forms",
     icon: <ListIcon />,
     subItems: [
       { name: "Main Banner", path: "/dashboard/HeroSearchCrud", pro: false },

@@ -42,6 +42,10 @@ import MustSellPropertyDashboard from "./pages/Dashboard/homeListing/MustSellPro
 import TrendingYoutubeDashboard from "./pages/Dashboard/homeListing/TrendingYoutubeDashboard";
 import NewsPropertyDashboard from "./pages/Dashboard/homeListing/NewsPropertyDashboard";
 import ThailandSecretsDashboard from "./pages/Dashboard/homeListing/ThailandSecretsDashboard";
+import Blog from "./pages/blog/Blog";
+import BlogDetails from "./pages/blog/BlogDetails";
+import CityProperty from "./pages/Properties/CityProperty";
+import BlogDashboard from "./pages/blog/BlogDashboard";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -59,12 +63,15 @@ function App() {
       <ScrollToTop />
       {showPopup && (
         <SubscribePopup
-          handleClose={() => setShowPopup(false)} // <-- Pass handleClose here
+          // handleClose={() => setShowPopup(false)} // <-- Pass handleClose here
         />
       )}
       <Chatbot />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/blog" element={<Blog/>} />
+        <Route path="/blog/:id" element={<BlogDetails />} />
+        <Route path="/city/:cityName" element={<CityProperty/>} />
         <Route path="/propertydeatilspage" element={<PropertyDetailsPage />} />
         <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
 
@@ -104,6 +111,7 @@ function App() {
             {/* Tables */}
             <Route path="basic-tables" element={<BasicTables />} />
             <Route path="PropertyTable" element={<PostProperty />} />
+            <Route path="Blog" element={<BlogDashboard/>} />
 
             {/* UI Elements */}
             <Route path="alerts" element={<Alerts />} />
