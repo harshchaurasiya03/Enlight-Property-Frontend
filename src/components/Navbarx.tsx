@@ -166,7 +166,7 @@ const NavbarX = () => {
       )}
 
       {/* Login Modal */}
-      {showLogin && <Login onClose={() => setShowLogin(false)} redirectTo="/postproperty" />}
+      {showLogin && <Login onClose={() => setShowLogin(false)} redirectTo="/dashboard/profile" />}
     </div>
   );
 };
