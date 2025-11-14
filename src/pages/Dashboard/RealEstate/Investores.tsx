@@ -13,7 +13,7 @@ export default function Investores() {
   const [investors, setInvestors] = useState<Investor[]>([
     {
       id: 1,
-      image: "/images/investor.avif",
+      image: "/images/investor1.avif",
       name: "John Doe",
       description: "Angel investor with 10 years of experience",
       status: "Active",
