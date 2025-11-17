@@ -12,11 +12,51 @@ type Subscription = {
 
 export default function SubscriptionDashboard() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([
-    { id: 5, name: "Premium Package", price: 199, offer: 20, description: "All premium features", createdAt: "2025-10-07", status: "Active" },
-    { id: 4, name: "Professional Package", price: 129, offer: 15, description: "For professionals & small teams", createdAt: "2025-10-07", status: "Active" },
-    { id: 3, name: "Standard Package", price: 79, offer: 10, description: "Most popular", createdAt: "2025-10-07", status: "Active" },
-    { id: 2, name: "Basic Listing", price: 29, offer: 0, description: "Basic listing features", createdAt: "2025-10-07", status: "Active" },
-    { id: 1, name: "Free Trial", price: 0, offer: 0, description: "Free limited trial", createdAt: "2025-10-07", status: "Active" },
+    {
+      id: 5,
+      name: "Premium Package",
+      price: 199,
+      offer: 20,
+      description: "All premium features",
+      createdAt: "2025-10-07",
+      status: "Active",
+    },
+    {
+      id: 4,
+      name: "Professional Package",
+      price: 129,
+      offer: 15,
+      description: "For professionals & small teams",
+      createdAt: "2025-10-07",
+      status: "Active",
+    },
+    {
+      id: 3,
+      name: "Standard Package",
+      price: 79,
+      offer: 10,
+      description: "Most popular",
+      createdAt: "2025-10-07",
+      status: "Active",
+    },
+    {
+      id: 2,
+      name: "Basic Listing",
+      price: 29,
+      offer: 0,
+      description: "Basic listing features",
+      createdAt: "2025-10-07",
+      status: "Active",
+    },
+    {
+      id: 1,
+      name: "Free Trial",
+      price: 0,
+      offer: 0,
+      description: "Free limited trial",
+      createdAt: "2025-10-07",
+      status: "Active",
+    },
   ]);
 
   // --- UI state ---
@@ -28,13 +68,20 @@ export default function SubscriptionDashboard() {
   const [deleteTarget, setDeleteTarget] = useState<Subscription | null>(null);
 
   // form state for create/edit
-  const [form, setForm] = useState<Partial<Subscription>>({
+  const [form, setForm] = useState<
+    Partial<Subscription> & {
+      images?: File[]; // new: uploaded images
+      imageLimit?: number;
+    }
+  >({
     name: "",
     price: 0,
     offer: 0,
     description: "",
     status: "Active",
     createdAt: new Date().toISOString().slice(0, 10),
+    images: [],
+    imageLimit: 5,
   });
 
   // search / sort / pagination
@@ -95,7 +142,9 @@ export default function SubscriptionDashboard() {
     };
 
     if (isEditing && editItem) {
-      setSubscriptions((prev) => prev.map((s) => (s.id === editItem.id ? payload : s)));
+      setSubscriptions((prev) =>
+        prev.map((s) => (s.id === editItem.id ? payload : s))
+      );
     } else {
       setSubscriptions((prev) => [payload, ...prev]); // add to top
     }
@@ -120,7 +169,7 @@ export default function SubscriptionDashboard() {
 
   // discount calculation helper
   const discountedPrice = (price: number, offer: number) =>
-    Math.round((price - (price * (offer / 100)) + Number.EPSILON) * 100) / 100;
+    Math.round((price - price * (offer / 100) + Number.EPSILON) * 100) / 100;
 
   // filtered + sorted + paginated
   const processed = useMemo(() => {
@@ -163,8 +212,6 @@ export default function SubscriptionDashboard() {
     }
   };
 
-  
-
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {/* header */}
@@ -205,20 +252,45 @@ export default function SubscriptionDashboard() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer" onClick={() => toggleSort("id")}>
+              <th
+                className="px-6 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer"
+                onClick={() => toggleSort("id")}
+              >
                 ID {sortBy === "id" ? (sortDir === "asc" ? "▲" : "▼") : null}
               </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer" onClick={() => toggleSort("name")}>
-                Name {sortBy === "name" ? (sortDir === "asc" ? "▲" : "▼") : null}
+              <th
+                className="px-6 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer"
+                onClick={() => toggleSort("name")}
+              >
+                Name{" "}
+                {sortBy === "name" ? (sortDir === "asc" ? "▲" : "▼") : null}
               </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Price</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Offer</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Discounted</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer" onClick={() => toggleSort("createdAt")}>
-                Created At {sortBy === "createdAt" ? (sortDir === "asc" ? "▲" : "▼") : null}
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                Price
               </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Operations</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                Offer
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                Discounted
+              </th>
+              <th
+                className="px-6 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer"
+                onClick={() => toggleSort("createdAt")}
+              >
+                Created At{" "}
+                {sortBy === "createdAt"
+                  ? sortDir === "asc"
+                    ? "▲"
+                    : "▼"
+                  : null}
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                Status
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                Operations
+              </th>
             </tr>
           </thead>
 
@@ -229,10 +301,16 @@ export default function SubscriptionDashboard() {
                 <td className="px-6 py-4">{s.name}</td>
                 <td className="px-6 py-4">${s.price.toFixed(2)}</td>
                 <td className="px-6 py-4">{s.offer}%</td>
-                <td className="px-6 py-4">${discountedPrice(s.price, s.offer).toFixed(2)}</td>
+                <td className="px-6 py-4">
+                  ${discountedPrice(s.price, s.offer).toFixed(2)}
+                </td>
                 <td className="px-6 py-4">{s.createdAt}</td>
                 <td className="px-6 py-4">
-                  <span className={`px-3 py-1 rounded-xl text-xs text-white ${s.status === "Active" ? "bg-green-500" : "bg-gray-500"}`}>
+                  <span
+                    className={`px-3 py-1 rounded-xl text-xs text-white ${
+                      s.status === "Active" ? "bg-green-500" : "bg-gray-500"
+                    }`}
+                  >
                     {s.status}
                   </span>
                 </td>
@@ -265,7 +343,10 @@ export default function SubscriptionDashboard() {
 
         {/* footer: summary & pagination */}
         <div className="flex items-center justify-between px-6 py-3 text-sm text-gray-600">
-          <div>Showing {processed.pageItems.length} of {processed.total} subscriptions</div>
+          <div>
+            Showing {processed.pageItems.length} of {processed.total}{" "}
+            subscriptions
+          </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -274,7 +355,9 @@ export default function SubscriptionDashboard() {
             >
               Prev
             </button>
-            <span>Page {page} / {processed.pages}</span>
+            <span>
+              Page {page} / {processed.pages}
+            </span>
             <button
               onClick={() => setPage((p) => Math.min(processed.pages, p + 1))}
               className="px-3 py-1 border rounded-xl disabled:opacity-50"
@@ -289,7 +372,8 @@ export default function SubscriptionDashboard() {
       {/* Create / Edit Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-2xl shadow-lg relative">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-2xl shadow-lg relative max-h-[90vh] overflow-y-auto">
+            {/* Close button */}
             <button
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
               onClick={() => {
@@ -301,9 +385,12 @@ export default function SubscriptionDashboard() {
               ✕
             </button>
 
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">{isEditing ? "Edit Subscription" : "Create Subscription"}</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">
+              {isEditing ? "Edit Subscription" : "Create Subscription"}
+            </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Name */}
               <div className="flex flex-col">
                 <label className="text-sm font-medium mb-1">Name</label>
                 <input
@@ -315,6 +402,7 @@ export default function SubscriptionDashboard() {
                 />
               </div>
 
+              {/* Price */}
               <div className="flex flex-col">
                 <label className="text-sm font-medium mb-1">Price (USD)</label>
                 <input
@@ -323,11 +411,14 @@ export default function SubscriptionDashboard() {
                   min={0}
                   step="0.01"
                   value={form.price ?? 0}
-                  onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
+                  onChange={(e) =>
+                    setForm({ ...form, price: Number(e.target.value) })
+                  }
                   className="border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
 
+              {/* Offer */}
               <div className="flex flex-col">
                 <label className="text-sm font-medium mb-1">Offer (%)</label>
                 <input
@@ -336,40 +427,59 @@ export default function SubscriptionDashboard() {
                   min={0}
                   max={100}
                   value={form.offer ?? 0}
-                  onChange={(e) => setForm({ ...form, offer: Math.max(0, Math.min(100, Number(e.target.value))) })}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      offer: Math.max(0, Math.min(100, Number(e.target.value))),
+                    })
+                  }
                   className="border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
 
+              {/* Created At */}
               <div className="flex flex-col">
                 <label className="text-sm font-medium mb-1">Created At</label>
                 <input
                   name="createdAt"
                   type="date"
-                  value={form.createdAt || new Date().toISOString().slice(0, 10)}
-                  onChange={(e) => setForm({ ...form, createdAt: e.target.value })}
+                  value={
+                    form.createdAt || new Date().toISOString().slice(0, 10)
+                  }
+                  onChange={(e) =>
+                    setForm({ ...form, createdAt: e.target.value })
+                  }
                   className="border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
 
+              {/* Description */}
               <div className="md:col-span-2 flex flex-col">
                 <label className="text-sm font-medium mb-1">Description</label>
                 <textarea
                   name="description"
                   value={form.description || ""}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, description: e.target.value })
+                  }
                   rows={3}
                   className="border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                   placeholder="Short description of subscription features"
                 />
               </div>
 
+              {/* Status */}
               <div className="flex flex-col">
                 <label className="text-sm font-medium mb-1">Status</label>
                 <select
                   name="status"
                   value={form.status || "Active"}
-                  onChange={(e) => setForm({ ...form, status: e.target.value as "Active" | "Inactive" })}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      status: e.target.value as "Active" | "Inactive",
+                    })
+                  }
                   className="border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 >
                   <option>Active</option>
@@ -377,17 +487,101 @@ export default function SubscriptionDashboard() {
                 </select>
               </div>
 
-              {/* Live discount preview */}
+              {/* Image Limit */}
               <div className="flex flex-col">
-                <label className="text-sm font-medium mb-1">Discount Preview</label>
+                <label className="text-sm font-medium mb-1">Image Limit</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={form.imageLimit ?? 5}
+                  onChange={(e) =>
+                    setForm({ ...form, imageLimit: Number(e.target.value) })
+                  }
+                  className="border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              {/* Image Upload */}
+              <div className="md:col-span-2 flex flex-col">
+                <label className="text-sm font-medium mb-1">
+                  Upload Images
+                </label>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (!files) return;
+                    const fileArray = Array.from(files);
+
+                    // enforce limit
+                    const limit = form.imageLimit ?? 5;
+                    if (fileArray.length > limit) {
+                      alert(`You can upload up to ${limit} images`);
+                      fileArray.splice(limit);
+                    }
+
+                    setForm({ ...form, images: fileArray });
+                  }}
+                  className="border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+
+                {/* Preview uploaded images */}
+                {form.images && form.images.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {form.images.map((img, idx) => (
+                      <div
+                        key={idx}
+                        className="w-20 h-20 border rounded-xl overflow-hidden relative"
+                      >
+                        <img
+                          src={URL.createObjectURL(img)}
+                          alt="preview"
+                          className="w-full h-full object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newImages = form.images?.filter(
+                              (_, i) => i !== idx
+                            );
+                            setForm({ ...form, images: newImages });
+                          }}
+                          className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Live Discount Preview */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium mb-1">
+                  Discount Preview
+                </label>
                 <div className="border border-gray-200 rounded-xl px-3 py-2 bg-gray-50">
-                  <div className="text-sm text-gray-600">Base: ${Number(form.price ?? 0).toFixed(2)}</div>
-                  <div className="text-sm text-gray-600">Offer: {Number(form.offer ?? 0)}%</div>
-                  <div className="text-sm font-medium mt-2">After Discount: ${discountedPrice(Number(form.price ?? 0), Number(form.offer ?? 0)).toFixed(2)}</div>
+                  <div className="text-sm text-gray-600">
+                    Base: ${Number(form.price ?? 0).toFixed(2)}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    Offer: {Number(form.offer ?? 0)}%
+                  </div>
+                  <div className="text-sm font-medium mt-2">
+                    After Discount: $
+                    {discountedPrice(
+                      Number(form.price ?? 0),
+                      Number(form.offer ?? 0)
+                    ).toFixed(2)}
+                  </div>
                 </div>
               </div>
             </div>
 
+            {/* Modal Buttons */}
             <div className="flex justify-end gap-4 pt-4">
               <button
                 onClick={() => {
@@ -417,7 +611,9 @@ export default function SubscriptionDashboard() {
           <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-lg">
             <h3 className="text-lg font-semibold mb-2">Delete Subscription</h3>
             <p className="text-sm text-gray-600 mb-4">
-              Are you sure you want to delete <strong>{deleteTarget.name}</strong>? This action cannot be undone.
+              Are you sure you want to delete{" "}
+              <strong>{deleteTarget.name}</strong>? This action cannot be
+              undone.
             </p>
 
             <div className="flex justify-end gap-3">

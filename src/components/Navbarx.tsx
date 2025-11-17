@@ -9,6 +9,8 @@ import { RootState } from "../redux/store";
 // ---------- TopHeader Component ----------
 const TopHeader = () => {
   const [showLogin, setShowLogin] = useState(false);
+    const [selected, setSelected] = useState("English");
+
 
   return (
     <div className="bg-blue-900 text-sm py-1.5 px-4 w-full hidden md:block">
