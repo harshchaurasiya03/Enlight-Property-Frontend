@@ -8,10 +8,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../redux/store";
 import { loadUser } from "../../../redux/actions/authAction";
-import {
-  fetchUserById,
-  updateMyProfile,
-} from "../../../redux/actions/userAction";
+import { fetchUserById, updateMyProfile } from "../../../redux/actions/userAction";
 import { useModal } from "../../../hooks/useModal";
 import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
@@ -29,6 +26,25 @@ export default function UserMetaCard() {
     { name: "instagram", icon: <FaInstagram /> },
   ];
 
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleChangePassword = async () => {
+    if (!oldPassword || !newPassword || !confirmPassword) return;
+
+    if (newPassword !== confirmPassword) {
+      alert("New password and confirm password do not match!");
+      return;
+    }
+
+    await dispatch(updateMyProfile({ oldPassword, newPassword }) as any);
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    closeModal();
+  };
+
   // Redux state
   const {
     user: authUser,
@@ -39,7 +55,6 @@ export default function UserMetaCard() {
     (s: RootState) => s.user
   );
 
-  // Prefer detailed fetched user over basic auth user
   const currentUser = fullUser || authUser;
 
   // Local state
@@ -75,7 +90,6 @@ export default function UserMetaCard() {
     const name = fullName.trim();
     await dispatch(updateMyProfile({ name, photoFile }) as any);
 
-    // Refresh latest data
     if (authUser?.id) {
       await dispatch(fetchUserById(authUser.id) as any);
     }
@@ -120,7 +134,6 @@ export default function UserMetaCard() {
               <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-left">
                 {currentUser?.name || "—"}
               </h4>
-
               <div className="flex flex-col items-center gap-1 text-center xl:flex-row xl:gap-3 xl:text-left">
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   {currentUser?.role || "user"}
@@ -132,12 +145,12 @@ export default function UserMetaCard() {
               </div>
             </div>
 
-            {/* Placeholder Socials (empty for now) */}
+            {/* Social Icons */}
             <div className="flex items-center order-2 gap-2 grow xl:order-3 xl:justify-end">
               {socialIcons.map((social) => (
                 <button
                   key={social.name}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 shadow-theme-xs hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 shadow-theme-xs hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/3 dark:hover:text-gray-200"
                 >
                   {social.icon}
                 </button>
@@ -148,23 +161,8 @@ export default function UserMetaCard() {
           {/* Edit Button */}
           <button
             onClick={openModal}
-            className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
+            className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/3 dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
           >
-            <svg
-              className="fill-current"
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M15.0911 2.78206C14.2125 1.90338 12.7878 1.90338 11.9092 2.78206L4.57524 10.116C4.26682 10.4244 4.0547 10.8158 3.96468 11.2426L3.31231 14.3352C3.25997 14.5833 3.33653 14.841 3.51583 15.0203C3.69512 15.1996 3.95286 15.2761 4.20096 15.2238L7.29355 14.5714C7.72031 14.4814 8.11172 14.2693 8.42013 13.9609L15.7541 6.62695C16.6327 5.74827 16.6327 4.32365 15.7541 3.44497L15.0911 2.78206Z"
-                fill=""
-              />
-            </svg>
             Edit
           </button>
         </div>
@@ -173,14 +171,12 @@ export default function UserMetaCard() {
       {/* --- Edit Modal --- */}
       <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[600px] m-4">
         <div className="no-scrollbar relative w-full max-w-[600px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-10">
-          <div className="px-2 pr-14">
-            <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-              Edit Profile
-            </h4>
-            <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-              Update your name or profile photo.
-            </p>
-          </div>
+          <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
+            Edit Profile
+          </h4>
+          <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+            Update your name or profile photo.
+          </p>
 
           <form
             className="flex flex-col gap-6"
@@ -189,7 +185,6 @@ export default function UserMetaCard() {
               handleSave();
             }}
           >
-            {/* Name Field */}
             <div>
               <Label>Full Name</Label>
               <Input
@@ -199,7 +194,6 @@ export default function UserMetaCard() {
               />
             </div>
 
-            {/* Photo Upload */}
             <div>
               <Label>Profile Photo</Label>
               <input
@@ -208,10 +202,7 @@ export default function UserMetaCard() {
                 onChange={(e) => {
                   const file = e.target.files?.[0] ?? null;
                   setPhotoFile(file);
-                  if (file) {
-                    const preview = URL.createObjectURL(file);
-                    setPhotoPreview(preview);
-                  }
+                  if (file) setPhotoPreview(URL.createObjectURL(file));
                 }}
               />
               {photoPreview && (
@@ -223,7 +214,6 @@ export default function UserMetaCard() {
               )}
             </div>
 
-            {/* Buttons */}
             <div className="flex items-center gap-3 mt-6 justify-end">
               <Button size="sm" variant="outline" onClick={closeModal}>
                 Cancel
@@ -235,6 +225,60 @@ export default function UserMetaCard() {
           </form>
         </div>
       </Modal>
+
+      {/* --- Change Password (Moved to the end) --- */}
+      <div className="mt-10 px-2 pr-14">
+        <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
+          Change Password
+        </h4>
+        <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+          Update your password securely.
+        </p>
+
+        <form
+          className="flex flex-col gap-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleChangePassword();
+          }}
+        >
+          <div>
+            <Label>Old Password</Label>
+            <Input
+              type="password"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <Label>New Password</Label>
+            <Input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <Label>Confirm Password</Label>
+            <Input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="flex items-center gap-3 mt-6 justify-end">
+            <Button size="sm" variant="outline" onClick={closeModal}>
+              Cancel
+            </Button>
+            <Button size="sm" disabled={loading}>
+              {loading ? "Saving..." : "Save Password"}
+            </Button>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

@@ -23,6 +23,7 @@
     "@shadcn/ui": "^0.0.4",
     "@supabase/supabase-js": "^2.76.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "apexcharts": "^5.3.5",
     "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",
