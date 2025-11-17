@@ -56,6 +56,7 @@ import BlogCategories from "./components/dashboard/BlogDash/BlogCategories";
 import Categories from "./components/dashboard/RealEstate/Categories";
 import Reviews from "./components/dashboard/RealEstate/Reviews"
 import Subscription from "./pages/Dashboard/subscription/Subscription"
+import BlogTag from "./components/dashboard/BlogDash/BlogTag";
 
 
 function App() {
@@ -137,6 +138,7 @@ function App() {
             <Route path="PropertyTable" element={<PostProperty />} />
             <Route path="Blog" element={<BlogDashboard/>} />
             <Route path="/dashboard/Categories" element={<BlogCategories/>} />
+            <Route path="/dashboard/tags" element={<BlogTag/>} />
 
             {/* UI Elements */}
             <Route path="alerts" element={<Alerts />} />
