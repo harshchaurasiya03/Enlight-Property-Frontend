@@ -64,7 +64,7 @@ const sampleRelated: RelatedProperty[] = [
 
 export default function PropertyDetailsPage() {
   const location = useLocation();
-  const mapRef = useRef<HTMLDivElement>(null); // scroll ref for map
+  const mapRef = useRef<HTMLDivElement>(null);
 
   const project = location.state as
     | {
@@ -98,6 +98,10 @@ export default function PropertyDetailsPage() {
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <ProjectOverview />
+
+            {/* ⭐ NEW AMENITIES SECTION ADDED HERE */}
+            <ProjectAmenities />
+
             <ProjectFAQ />
             <ProjectMap project={displayProject} ref={mapRef} />
             <ProjectVideo />
@@ -126,6 +130,78 @@ export default function PropertyDetailsPage() {
     </div>
   );
 }
+
+function ProjectAmenities() {
+  const [amenities, setAmenities] = useState<string[]>([
+    "Swimming Pool",
+    "Gym",
+    "Garden",
+    "Parking Area",
+    "Security 24/7",
+    "Kids Play Area",
+    "Club House",
+    "Power Backup",
+    "CCTV Surveillance",
+    "Spa & Sauna",
+    "Jogging Track",
+    "Sports Complex",
+    "Community Hall",
+    "Shopping Center",
+  ]);
+
+  const [newAmenity, setNewAmenity] = useState("");
+
+  const addAmenity = () => {
+    if (newAmenity.trim() === "") return;
+    setAmenities([...amenities, newAmenity.trim()]);
+    setNewAmenity("");
+  };
+
+  const deleteAmenity = (index: number) => {
+    setAmenities(amenities.filter((_, i) => i !== index));
+  };
+
+  return (
+    <section className="bg-white mt-6 p-6 rounded shadow-sm">
+      <h2 className="text-xl font-semibold mb-4">Amenities</h2>
+
+      {/* Amenities list */}
+      <div className="flex flex-wrap gap-2">
+        {amenities.map((item, index) => (
+          <div
+            key={index}
+            className="flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-600 text-sm rounded-full"
+          >
+            <span>{item}</span>
+            <button
+              onClick={() => deleteAmenity(index)}
+              className="text-red-400 hover:text-red-200 font-bold"
+            >
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Add more amenities */}
+      <div className="mt-4 flex gap-2">
+        <input
+          value={newAmenity}
+          onChange={(e) => setNewAmenity(e.target.value)}
+          className="border px-3 py-2 rounded w-full text-sm"
+          placeholder="Add new amenity..."
+        />
+        <button
+          onClick={addAmenity}
+          className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Add
+        </button>
+      </div>
+    </section>
+  );
+}
+
 
 // HeroGallery with video click-to-play/pause
 function HeroGallery({
