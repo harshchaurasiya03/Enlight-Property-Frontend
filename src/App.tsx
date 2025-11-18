@@ -57,6 +57,8 @@ import Categories from "./components/dashboard/RealEstate/Categories";
 import Reviews from "./components/dashboard/RealEstate/Reviews"
 import Subscription from "./pages/Dashboard/subscription/Subscription"
 import BlogTag from "./components/dashboard/BlogDash/BlogTag";
+import AmenitiesProperty from "./pages/Amenities/AmenitiesProperty";
+import AmenitiesHome from "./components/home/AmenitiesHome";
 
 
 function App() {
@@ -82,7 +84,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/blog" element={<Blog/>} />
+        <Route path="/projects" element={<AmenitiesProperty/>}/>
         <Route path="/blog/:id" element={<BlogDetails />} />
+        <Route path="/amenities" element={<AmenitiesHome />} />
+        <Route path="/amenities/:id" element={<AmenitiesProperty />} />
         <Route path="/city/:cityName" element={<CityProperty/>} />
         <Route path="/propertydeatilspage" element={<PropertyDetailsPage />} />
         <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
@@ -124,7 +129,7 @@ function App() {
 
             {/* {Real EState} */}
             <Route path="/dashboard/Projects" element={<Projects/>}/>
-            <Route path="/dashboard/Features" element={<Features/>}/>
+            <Route path="/dashboard/amenities" element={<Features/>}/>
             <Route path="/dashboard/Investors" element={<Investores/>}/>
             <Route path="/dashboard/propertyCategories" element={<Categories/>} />
             <Route path="/dashboard/reviews" element={<Reviews/>} />

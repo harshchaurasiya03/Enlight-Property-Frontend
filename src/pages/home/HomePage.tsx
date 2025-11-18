@@ -13,14 +13,16 @@ import NewsProperty from "../../components/home/NewsProperty";
 import ThailandSecrets from "../../components/home/ThailandSecrets";
 import PropertyCarousel from "../../components/home/PropertyCarousel";
 import Navbarx from "../../components/Navbarx";
+import AmenitiesHome from "../../components/home/AmenitiesHome";
 
 const HomePage = () => {
   return (
     <div className="min-h-screen bg-white">
       <Navbarx />
       <HeroSearch />
+      <AmenitiesHome/>
       <FeaturedProjects />
-      {/* <PropertyCarousel /> */}
+      <PropertyCarousel />
       <SplitCard />
       <RentToOwn />
       <FutureProjects />

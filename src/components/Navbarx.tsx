@@ -9,14 +9,14 @@ import { RootState } from "../redux/store";
 // ---------- TopHeader Component ----------
 const TopHeader = () => {
   const [showLogin, setShowLogin] = useState(false);
-    const [selected, setSelected] = useState("English");
-
+  const [selected, setSelected] = useState("English");
 
   return (
     <div className="bg-blue-900 text-sm py-1.5 px-4 w-full hidden md:block">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <p className="text-gray-100">
-          Join us for Exclusive Open House Events This Weekend and Find Your Perfect Home!
+          Join us for Exclusive Open House Events This Weekend and Find Your
+          Perfect Home!
         </p>
 
         <div className="flex items-center space-x-4 text-white">
@@ -66,7 +66,15 @@ const NavbarX = () => {
     }
   };
 
-  const menuItems = ["Buy", "Rent", "Sell", "Rent-To-Own", "Projects", "Advice", "Blog"];
+  const menuItems = [
+    "Buy",
+    "Rent",
+    "Sell",
+    "Rent-To-Own",
+    "Projects",
+    "Advice",
+    "Blog",
+  ];
 
   return (
     <div className="bg-white shadow-sm w-full">
@@ -74,14 +82,48 @@ const NavbarX = () => {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-              <img src="/logo/enlightlogo.png" className="h-16" alt="Enlight Logo" />
+            <Link
+              to="/"
+              className="flex items-center space-x-3 rtl:space-x-reverse"
+            >
+              <img
+                src="/logo/enlightlogo.png"
+                className="h-16"
+                alt="Enlight Logo"
+              />
             </Link>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-6"> {menuItems.map((item) => item === "Blog" ? ( <Link key={item} to="/blog" className="text-gray-700 hover:text-blue-600 font-medium" > {item} </Link> ) : ( <a key={item} href="#" className="text-gray-700 hover:text-blue-600 font-medium" > {item} </a> ) )}
-
+          <div className="hidden md:flex items-center space-x-6">
+            {" "}
+            {menuItems.map((item) =>
+              item === "Blog" ? (
+                <Link
+                  key={item}
+                  to="/blog"
+                  className="text-gray-700 hover:text-blue-600 font-medium"
+                >
+                  {item}
+                </Link>
+              ) : item === "Projects" ? (
+                <Link
+                  key={item}
+                  to="/projects"
+                  className="text-gray-700 hover:text-blue-600 font-medium"
+                >
+                  {item}
+                </Link>
+              ) : (
+                <a
+                  key={item}
+                  href="#"
+                  className="text-gray-700 hover:text-blue-600 font-medium"
+                >
+                  {item}
+                </a>
+              )
+            )}
             <button
               onClick={handleAddPropertyClick}
               className="flex items-center space-x-2 text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium transition"
@@ -108,28 +150,34 @@ const NavbarX = () => {
         <div className="md:hidden bg-white border-t shadow-inner">
           <div className="px-4 py-3 space-y-2">
             {menuItems.map((item) =>
-  item === "Blog" ? (
-    <Link
-      key={item}
-      to="/blog"
-      className="block text-gray-700 hover:text-blue-600"
-      onClick={() => setIsMobileMenuOpen(false)} // close mobile menu on click
-    >
-      {item}
-    </Link>
-  ) : (
-    <a
-      key={item}
-      href="#"
-      className="block text-gray-700 hover:text-blue-600"
-    >
-      {item}
-    </a>
-  )
-)}
-
-
-            
+              item === "Blog" ? (
+                <Link
+                  key={item}
+                  to="/blog"
+                  className="block text-gray-700 hover:text-blue-600"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item}
+                </Link>
+              ) : item === "Projects" ? (
+                <Link
+                  key={item}
+                  to="/projects"
+                  className="block text-gray-700 hover:text-blue-600"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item}
+                </Link>
+              ) : (
+                <a
+                  key={item}
+                  href="#"
+                  className="block text-gray-700 hover:text-blue-600"
+                >
+                  {item}
+                </a>
+              )
+            )}
 
             <button
               onClick={handleAddPropertyClick}
@@ -168,7 +216,12 @@ const NavbarX = () => {
       )}
 
       {/* Login Modal */}
-      {showLogin && <Login onClose={() => setShowLogin(false)} redirectTo="/dashboard/profile" />}
+      {showLogin && (
+        <Login
+          onClose={() => setShowLogin(false)}
+          redirectTo="/dashboard/profile"
+        />
+      )}
     </div>
   );
 };

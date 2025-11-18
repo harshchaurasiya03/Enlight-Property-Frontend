@@ -27,6 +27,22 @@ export default function Features() {
       status: "Inactive",
       createdAt: "2025-10-20",
     },
+     {
+      id: 3,
+      image: "/images/property4.jpeg",
+      name: "Parking",
+      description: "Fully safe parking",
+      status: "active",
+      createdAt: "2025-10-25",
+    },
+     {
+      id: 4,
+      image: "/images/property8.jpeg",
+      name: "Garden",
+      description: "Fully equipped play ground",
+      status: "active",
+      createdAt: "2025-11-20",
+    },
   ]);
 
   const [showModal, setShowModal] = useState(false);
