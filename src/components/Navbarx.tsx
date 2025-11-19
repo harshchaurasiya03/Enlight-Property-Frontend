@@ -257,7 +257,7 @@ const HeaderWrapper = () => {
   }, [lastScrollY]);
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50">
+    <div className="fixed top-0 left-0 w-full z-9999">
       {/* Top Header */}
       <div
         ref={topHeaderRef}

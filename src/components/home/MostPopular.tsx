@@ -57,7 +57,7 @@ const MostPopular: React.FC = () => {
 
   return (
     <div
-         className="container px-4 sm:px-6 py-8 mx-auto bg-gray-100"
+         className="container px-4 sm:px-6 py-8 mx-auto"
   onMouseEnter={() => {
     setHovered(true);
     setIsPaused(true); // stop auto-scroll

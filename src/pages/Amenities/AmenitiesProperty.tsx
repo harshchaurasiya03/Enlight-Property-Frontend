@@ -270,14 +270,14 @@ export default function AmenitiesProperty() {
   return (
     <>
       <Navbarx />
-      <div className="min-h-screen bg-gray-50 text-gray-800">
+      <div className="min-h-screen bg-gray-50 text-gray-800 z-0">
         {/* Hero map section with floating search bar */}
-        <section className="sticky w-full h-[50vh]  mt-28">
+        <section className="w-full h-[50vh] mt-20 sm:mt-28 relative z-0">
           {/* Map */}
           <MapContainer
             center={[13.7563, 100.5018]}
             zoom={5}
-           className="h-full w-full "
+            className="h-full w-full "
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -294,157 +294,160 @@ export default function AmenitiesProperty() {
               </Marker>
             ))}
           </MapContainer>
-          {/* Floating Search Bar */}
-          <section className="absolute left-1/2 bottom-[-12%] transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-6 w-7xl z-99999 border">
-            <div className="flex flex-wrap items-center gap-3">
-              <input
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-                placeholder="Keyword"
-                className="flex-1 min-w-[140px] border px-3 py-2 rounded"
-              />
+        </section>
 
-              <input
-                value={locationFilter}
-                onChange={(e) => setLocationFilter(e.target.value)}
-                placeholder="Location"
-                className="flex-1 min-w-[140px] border px-3 py-2 rounded"
-              />
+        {/* Search bar container */}
+        <section className="max-w-7xl mx-auto -mt-12 relative z-999">
+          <div className="bg-white shadow-lg rounded-lg p-6 md:p-6 border flex flex-col md:flex-row flex-wrap gap-3">
+            <input
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              placeholder="Keyword"
+              className="flex-1 min-w-[120px] border px-3 py-2 rounded"
+            />
+            <input
+              value={locationFilter}
+              onChange={(e) => setLocationFilter(e.target.value)}
+              placeholder="Location"
+              className="flex-1 min-w-[120px] border px-3 py-2 rounded"
+            />
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="border px-3 py-2 rounded min-w-[120px]"
+            >
+              <option value="">All Categories</option>
+              {tabs.slice(1).map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className="border px-3 py-2 rounded text-gray-600 hover:text-blue-600"
+            >
+              Advanced
+            </button>
+            <button
+              onClick={() => console.log("trigger search")}
+              className="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 ml-auto"
+            >
+              Search
+            </button>
+          </div>
 
+          {showAdvanced && (
+            <div className="mt-4 bg-white shadow-lg rounded-lg p-4 md:p-6 flex flex-col gap-3 w-full z-50">
+              {/* Price Range */}
+              <div className="flex flex-col w-full">
+                <label className="text-gray-500 text-sm">Price Range</label>
+                <input
+                  type="range"
+                  min={0}
+                  max={3000000}
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
+                  className="w-full"
+                />
+                <p className="text-sm">
+                  ${minPrice} - ${maxPrice}
+                </p>
+              </div>
+
+              {/* Square Range */}
+              <div className="flex flex-col w-full">
+                <label className="text-gray-500 text-sm">Square Range</label>
+                <input
+                  type="range"
+                  min={20}
+                  max={700}
+                  value={maxArea}
+                  onChange={(e) => setMaxArea(Number(e.target.value))}
+                  className="w-full"
+                />
+                <p className="text-sm">
+                  {minArea}m² - {maxArea}m²
+                </p>
+              </div>
+
+              {/* Bedrooms */}
               <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="border px-3 py-2 rounded min-w-[150px]"
+                className="border px-3 py-2 rounded w-full"
+                value={bedrooms}
+                onChange={(e) => setBedrooms(e.target.value)}
               >
-                <option value="">All Categories</option>
-                {tabs.slice(1).map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
+                <option value="">Bedrooms</option>
+                {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+                  <option key={n}>{n}</option>
                 ))}
               </select>
 
-              <button
-                onClick={() => setShowAdvanced(!showAdvanced)}
-                className="border px-3 py-2 rounded text-gray-600 hover:text-blue-600"
+              {/* Bathrooms */}
+              <select
+                className="border px-3 py-2 rounded w-full"
+                value={bathrooms}
+                onChange={(e) => setBathrooms(e.target.value)}
               >
-                Advanced
-              </button>
+                <option value="">Bathrooms</option>
+                {[1, 2, 3, 4, 5, 6].map((n) => (
+                  <option key={n}>{n}</option>
+                ))}
+              </select>
 
-              <button
-                onClick={() => console.log("trigger search")}
-                className="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 ml-auto"
+              {/* Floors */}
+              <select
+                className="border px-3 py-2 rounded w-full"
+                value={floors}
+                onChange={(e) => setFloors(e.target.value)}
               >
-                Search
-              </button>
-            </div>
+                <option value="">Floors</option>
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <option key={n}>{n}</option>
+                ))}
+              </select>
 
-            {showAdvanced && (
-              <div className="mt-4 flex flex-wrap gap-3 items-center">
-                <div className="flex flex-col min-w-[150px]">
-                  <label className="text-gray-500 text-sm">Price Range</label>
-                  <input
-                    type="range"
-                    min={0}
-                    max={3000000}
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(Number(e.target.value))}
-                    className="w-full"
-                  />
-                  <p className="text-sm">
-                    ${minPrice} - ${maxPrice}
-                  </p>
-                </div>
+              {/* Property Type */}
+              <select
+                className="border px-3 py-2 rounded w-full"
+                value={propertyType}
+                onChange={(e) => setPropertyType(e.target.value)}
+              >
+                <option value="">Type</option>
+                <option>Residential</option>
+                <option>Commercial</option>
+              </select>
 
-                <div className="flex flex-col min-w-[150px]">
-                  <label className="text-gray-500 text-sm">Square Range</label>
-                  <input
-                    type="range"
-                    min={20}
-                    max={700}
-                    value={maxArea}
-                    onChange={(e) => setMaxArea(Number(e.target.value))}
-                    className="w-full"
-                  />
-                  <p className="text-sm">
-                    {minArea}m² - {maxArea}m²
-                  </p>
-                </div>
+              {/* Project */}
+              <input
+                className="border px-3 py-2 rounded w-full"
+                placeholder="Search Project"
+                value={project}
+                onChange={(e) => setProject(e.target.value)}
+              />
 
-                <select
-                  className="border px-3 py-2 rounded min-w-[120px]"
-                  value={bedrooms}
-                  onChange={(e) => setBedrooms(e.target.value)}
-                >
-                  <option value="">Bedrooms</option>
-                  {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-                    <option key={n}>{n}</option>
-                  ))}
-                </select>
-
-                <select
-                  className="border px-3 py-2 rounded min-w-[120px]"
-                  value={bathrooms}
-                  onChange={(e) => setBathrooms(e.target.value)}
-                >
-                  <option value="">Bathrooms</option>
-                  {[1, 2, 3, 4, 5, 6].map((n) => (
-                    <option key={n}>{n}</option>
-                  ))}
-                </select>
-
-                <select
-                  className="border px-3 py-2 rounded min-w-[120px]"
-                  value={floors}
-                  onChange={(e) => setFloors(e.target.value)}
-                >
-                  <option value="">Floors</option>
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <option key={n}>{n}</option>
-                  ))}
-                </select>
-
-                <select
-                  className="border px-3 py-2 rounded min-w-[150px]"
-                  value={propertyType}
-                  onChange={(e) => setPropertyType(e.target.value)}
-                >
-                  <option value="">Type</option>
-                  <option>Residential</option>
-                  <option>Commercial</option>
-                </select>
-
-                <input
-                  className="border px-3 py-2 rounded min-w-[150px]"
-                  placeholder="Search Project"
-                  value={project}
-                  onChange={(e) => setProject(e.target.value)}
-                />
-
-                <div className="flex flex-wrap gap-3 min-w-[300px]">
-                  {["Parking", "Security", "Garden", "Pool", "Gym"].map(
-                    (am) => (
-                      <label
-                        key={am}
-                        className="text-sm flex gap-1 items-center"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={amenities.includes(am)}
-                          onChange={() => toggleAmenity(am)}
-                        />
-                        {am}
-                      </label>
-                    )
-                  )}
-                </div>
+              {/* Amenities */}
+              <div className="flex flex-wrap gap-2 w-full">
+                {["Parking", "Security", "Garden", "Pool", "Gym"].map((am) => (
+                  <label
+                    key={am}
+                    className="flex gap-2 items-center w-1/2 text-sm"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={amenities.includes(am)}
+                      onChange={() => toggleAmenity(am)}
+                    />
+                    {am}
+                  </label>
+                ))}
               </div>
-            )}
-          </section>
+            </div>
+          )}
         </section>
 
         {/* Recommended For You */}
-        <section className="max-w-7xl mx-auto px-4 mt-25">
+        <section className="max-w-7xl mx-auto px-4 mt-15 md">
           <h1 className="flex alignItem-center justify-center text-3xl font-semibold mb-8">
             Recommended For You
           </h1>
