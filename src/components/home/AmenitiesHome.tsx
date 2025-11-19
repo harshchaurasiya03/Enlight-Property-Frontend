@@ -104,10 +104,10 @@ export default function AmenitiesHome() {
   return (
     <div className="container px-4 sm:px-6 py-8 mx-auto bg-gray-100">
       {/* Heading */}
-      <h2 className="text-3xl font-semibold mt-10 mb-6">Recommended Properties</h2>
+      <h2 className="flex alignItem-center justify-center text-3xl font-semibold mt-10 mb-6">Recommended Properties</h2>
 
       {/* Tabs */}
-      <div className="flex gap-3 flex-wrap mb-6">
+      <div className="flex alignItem-center justify-center gap-3 flex-wrap mb-6">
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -128,7 +128,7 @@ export default function AmenitiesHome() {
         {filtered.map((p) => (
           <div
             key={p.id}
-            onClick={() => navigate(`/amenities/${p.id}`)}
+            onClick={() => navigate(`/propertydeatilspage`)}
             className="bg-white rounded-2xl shadow border hover:shadow-xl transition cursor-pointer"
           >
             <div className="w-full h-60">
@@ -155,7 +155,7 @@ export default function AmenitiesHome() {
                   <img
                     src={p.owner.profile}
                     alt={p.owner.name}
-                    className="w-6 h-6 rounded-full"
+                    className="w-6 h-8 rounded-full"
                   />
                   <span>{p.owner.name}</span>
                 </div>
@@ -165,6 +165,16 @@ export default function AmenitiesHome() {
             </div>
           </div>
         ))}
+      </div>
+
+       {/* BUTTON TO OPEN AMENITIES PROPERTY PAGE */}
+      <div className="flex justify-center mt-10">
+        <button
+          onClick={() => navigate("/projects")}
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition"
+        >
+          View All Properties
+        </button>
       </div>
     </div>
   );

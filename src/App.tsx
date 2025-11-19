@@ -87,7 +87,6 @@ function App() {
         <Route path="/projects" element={<AmenitiesProperty/>}/>
         <Route path="/blog/:id" element={<BlogDetails />} />
         <Route path="/amenities" element={<AmenitiesHome />} />
-        <Route path="/amenities/:id" element={<AmenitiesProperty />} />
         <Route path="/city/:cityName" element={<CityProperty/>} />
         <Route path="/propertydeatilspage" element={<PropertyDetailsPage />} />
         <Route path="/verify-email/:token" element={<VerifyEmailPage />} />

@@ -4,6 +4,7 @@ import Footer from "../../components/Footer";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useNavigate } from "react-router-dom";
 
 // Fix default Leaflet icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -207,6 +208,7 @@ export default function AmenitiesProperty() {
   const [keyword, setKeyword] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
+  const navigate = useNavigate();
 
   // NEW ADVANCED STATES
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -270,14 +272,12 @@ export default function AmenitiesProperty() {
       <Navbarx />
       <div className="min-h-screen bg-gray-50 text-gray-800">
         {/* Hero map section with floating search bar */}
-        <section className="relative w-full h-[50vh] overflow-hidden mt-30">
-
+        <section className="sticky w-full h-[50vh]  mt-28">
           {/* Map */}
           <MapContainer
             center={[13.7563, 100.5018]}
             zoom={5}
-            style={{ height: "100%", width: "100%" }}
-            className="z-0"
+           className="h-full w-full "
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -294,12 +294,9 @@ export default function AmenitiesProperty() {
               </Marker>
             ))}
           </MapContainer>
-
-
-            {/* Floating Search Bar */}
-          {/* <section className="absolute left-1/2 bottom-0  transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-6 w-6xl">
+          {/* Floating Search Bar */}
+          <section className="absolute left-1/2 bottom-[-12%] transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-6 w-7xl z-99999 border">
             <div className="flex flex-wrap items-center gap-3">
-             
               <input
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
@@ -307,7 +304,6 @@ export default function AmenitiesProperty() {
                 className="flex-1 min-w-[140px] border px-3 py-2 rounded"
               />
 
-              
               <input
                 value={locationFilter}
                 onChange={(e) => setLocationFilter(e.target.value)}
@@ -315,7 +311,6 @@ export default function AmenitiesProperty() {
                 className="flex-1 min-w-[140px] border px-3 py-2 rounded"
               />
 
-             
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
@@ -329,7 +324,6 @@ export default function AmenitiesProperty() {
                 ))}
               </select>
 
-           
               <button
                 onClick={() => setShowAdvanced(!showAdvanced)}
                 className="border px-3 py-2 rounded text-gray-600 hover:text-blue-600"
@@ -345,10 +339,8 @@ export default function AmenitiesProperty() {
               </button>
             </div>
 
-           
             {showAdvanced && (
               <div className="mt-4 flex flex-wrap gap-3 items-center">
-                
                 <div className="flex flex-col min-w-[150px]">
                   <label className="text-gray-500 text-sm">Price Range</label>
                   <input
@@ -364,7 +356,6 @@ export default function AmenitiesProperty() {
                   </p>
                 </div>
 
-             
                 <div className="flex flex-col min-w-[150px]">
                   <label className="text-gray-500 text-sm">Square Range</label>
                   <input
@@ -380,7 +371,6 @@ export default function AmenitiesProperty() {
                   </p>
                 </div>
 
-            
                 <select
                   className="border px-3 py-2 rounded min-w-[120px]"
                   value={bedrooms}
@@ -392,7 +382,6 @@ export default function AmenitiesProperty() {
                   ))}
                 </select>
 
-             
                 <select
                   className="border px-3 py-2 rounded min-w-[120px]"
                   value={bathrooms}
@@ -404,7 +393,7 @@ export default function AmenitiesProperty() {
                   ))}
                 </select>
 
-                  <select
+                <select
                   className="border px-3 py-2 rounded min-w-[120px]"
                   value={floors}
                   onChange={(e) => setFloors(e.target.value)}
@@ -415,7 +404,6 @@ export default function AmenitiesProperty() {
                   ))}
                 </select>
 
-            
                 <select
                   className="border px-3 py-2 rounded min-w-[150px]"
                   value={propertyType}
@@ -426,7 +414,6 @@ export default function AmenitiesProperty() {
                   <option>Commercial</option>
                 </select>
 
-              
                 <input
                   className="border px-3 py-2 rounded min-w-[150px]"
                   placeholder="Search Project"
@@ -434,7 +421,6 @@ export default function AmenitiesProperty() {
                   onChange={(e) => setProject(e.target.value)}
                 />
 
-          
                 <div className="flex flex-wrap gap-3 min-w-[300px]">
                   {["Parking", "Security", "Garden", "Pool", "Gym"].map(
                     (am) => (
@@ -455,12 +441,13 @@ export default function AmenitiesProperty() {
               </div>
             )}
           </section>
-           */}
         </section>
 
         {/* Recommended For You */}
-        <section className="max-w-7xl mx-auto px-4 mt-8">
-          <h1 className="flex alignItem-center justify-center text-3xl font-semibold mb-4">Recommended For You</h1>
+        <section className="max-w-7xl mx-auto px-4 mt-25">
+          <h1 className="flex alignItem-center justify-center text-3xl font-semibold mb-8">
+            Recommended For You
+          </h1>
 
           {/* Tabs */}
           <div className="flex gap-4 mb-6 flex-wrap alignItem-center justify-center">
@@ -484,9 +471,10 @@ export default function AmenitiesProperty() {
             {filteredProperties.map((p) => (
               <div
                 key={p.id}
-                className="bg-white rounded shadow overflow-hidden border"
+                onClick={() => navigate(`/propertydeatilspage`)}
+                className="bg-white rounded shadow overflow-hidden border cursor-pointer hover:shadow-lg transition"
               >
-                <div className="w-full h-48">
+                <div className="w-full h-60">
                   <img
                     src={p.image}
                     alt={p.title}
@@ -516,7 +504,7 @@ export default function AmenitiesProperty() {
                       <img
                         src={p.owner.profile}
                         alt={p.owner.name}
-                        className="w-6 h-6 rounded-full object-cover"
+                        className="w-6 h-8 rounded-full object-cover"
                       />
                       <span>{p.owner.name}</span>
                     </div>
