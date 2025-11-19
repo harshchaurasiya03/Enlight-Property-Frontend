@@ -102,7 +102,7 @@ export default function AmenitiesHome() {
     .slice(0, 6);
 
   return (
-    <div className="container px-4 sm:px-6 py-8 mx-auto bg-gray-100">
+    <div className="container px-4 sm:px-6 py-8 mx-auto w-full">
       {/* Heading */}
       <h2 className="flex alignItem-center justify-center text-3xl font-semibold mt-10 mb-6">Recommended Properties</h2>
 
