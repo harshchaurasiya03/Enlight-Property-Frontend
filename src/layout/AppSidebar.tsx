@@ -51,7 +51,7 @@ const navItems: NavItem[] = [
     subItems: [
       { name: "Property tables", path: "/dashboard/PropertyTable", pro: false },
       { name: "Projects", path: "/dashboard/Projects", pro: false },
-      { name: "Features", path: "/dashboard/Features", pro: false },
+      { name: "Amenities", path: "/dashboard/amenities", pro: false },
       { name: "Investors", path: "/dashboard/Investors", pro: false },
       { name: "Categories", path: "/dashboard/propertyCategories", pro: false },
       { name: "Reviews", path: "/dashboard/reviews", pro: false },

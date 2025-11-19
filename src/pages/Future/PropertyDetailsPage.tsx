@@ -64,7 +64,7 @@ const sampleRelated: RelatedProperty[] = [
 
 export default function PropertyDetailsPage() {
   const location = useLocation();
-  const mapRef = useRef<HTMLDivElement>(null); // scroll ref for map
+  const mapRef = useRef<HTMLDivElement>(null);
 
   const project = location.state as
     | {
@@ -127,7 +127,7 @@ export default function PropertyDetailsPage() {
   );
 }
 
-// HeroGallery with video click-to-play/pause
+// {Hero section}
 function HeroGallery({
   project,
   scrollToMap,
@@ -143,6 +143,13 @@ function HeroGallery({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<{
+    type: "image" | "video" | "youtube";
+    src: string;
+  } | null>(null);
+
   const handleVideoClick = () => {
     if (!videoRef.current) return;
     if (isPlaying) {
@@ -154,63 +161,154 @@ function HeroGallery({
     }
   };
 
+  const openModal = (type: "image" | "video" | "youtube", src: string) => {
+    setModalContent({ type, src });
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalContent(null);
+    if (modalContent?.type === "video" && videoRef.current) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
   return (
-    <section className="bg-white rounded shadow-sm overflow-hidden">
-      <div className="w-full h-56 md:h-72 lg:h-96 bg-gray-200 relative">
-        <img
-          src={project.image}
-          alt={project.projectName}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+    <>
+      <section className="bg-white rounded shadow-sm overflow-hidden">
+        <div className="w-full h-56 md:h-72 lg:h-96 bg-gray-200 relative">
+          <img
+            src={project.image}
+            alt={project.projectName}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
 
-        <div className="absolute bottom-0 left-0 right-0 py-3 px-6">
-          <div className="bg-black/70 rounded-md p-2 flex items-center gap-3 overflow-x-auto">
-            {/* Image Thumbnails */}
-            {Array.from({ length: 6 }).map((_, i) => (
-              <img
-                key={i}
-                src={`/images/property${i + 1}.jpeg`}
-                alt={`thumb-${i}`}
+          <div className="absolute bottom-0 left-0 right-0 py-3 px-6">
+            <div className="bg-black/70 rounded-md p-2 flex items-center gap-3 overflow-x-auto">
+              {/* Image Thumbnails */}
+              {Array.from({ length: 6 }).map((_, i) => {
+                const src = `/images/property${i + 1}.jpeg`;
+                return (
+                  <img
+                    key={i}
+                    src={src}
+                    alt={`thumb-${i}`}
+                    className="w-24 h-16 rounded object-cover border-2 border-white/40 cursor-pointer"
+                    onClick={() => openModal("image", src)}
+                  />
+                );
+              })}
+
+              {/* Video Thumbnail */}
+              <video
+                ref={videoRef}
                 className="w-24 h-16 rounded object-cover border-2 border-white/40 cursor-pointer"
+                src="/videos/PropertyCarousel/v1.mp4"
+                muted
+                loop
+                onClick={handleVideoClick}
               />
-            ))}
-
-            {/* Video Thumbnail */}
-            <video
-              ref={videoRef}
-              className="w-24 h-16 rounded object-cover border-2 border-white/40 cursor-pointer"
-              src="/videos/PropertyCarousel/v1.mp4"
-              muted
-              loop
-              onClick={handleVideoClick}
-            />
-
-            {/* Map Thumbnail with white icon */}
-            <div
-              onClick={scrollToMap}
-              className="w-26 h-16 rounded border-2 border-white/40 cursor-pointer bg-gary-100 flex items-center justify-center"
-              title="View Map"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="Gray"
-                viewBox="0 0 24 24"
-                className="w-10 h-10"
+              {/* YouTube Button */}
+              <div
+                onClick={() =>
+                  openModal(
+                    "youtube",
+                    "https://www.youtube.com/embed/hS_149t5okc"
+                  )
+                }
+                className="w-24 h-16 rounded border-2 border-white/40 cursor-pointer flex flex-col items-center justify-center gap-1"
+                title="YouTube"
               >
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-10 h-10"
+                  fill="white"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+
+                <span className=" text-white">YouTube</span>
+              </div>
+
+              {/* Map Thumbnail */}
+              <div
+                onClick={scrollToMap}
+                className="w-26 h-16 rounded border-2 border-white/40 cursor-pointer flex flex-col items-center justify-center"
+                title="View Map"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="white"
+                  viewBox="0 0 24 24"
+                  className="w-6 h-6"
+                >
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                </svg>
+                <span className="text-white">Map</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="px-6 py-4">
-        <h1 className="text-2xl font-bold">{project.projectName}</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          {project.location} · 270 views · Nov 18, 2019
-        </p>
-      </div>
-    </section>
+        <div className="px-6 py-4">
+          <h1 className="text-2xl font-bold">{project.projectName}</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            {project.location} · 270 views · Nov 18, 2019
+          </p>
+        </div>
+      </section>
+
+      {/* MODAL */}
+      {isModalOpen && modalContent && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <div className="relative max-w-4xl w-full mx-4">
+            {/* Close Button */}
+            <button
+              onClick={() => {
+                setIsModalOpen(false);
+                setModalContent(null);
+                if (modalContent.type === "video" && videoRef.current) {
+                  videoRef.current.pause();
+                  setIsPlaying(false);
+                }
+              }}
+              className="absolute top-2 right-2 text-white text-2xl font-bold z-50"
+            >
+              ×
+            </button>
+
+            {modalContent.type === "image" && (
+              <img
+                src={modalContent.src}
+                alt="Full view"
+                className="w-full max-h-[90vh] object-contain rounded"
+              />
+            )}
+
+            {modalContent.type === "video" && (
+              <video
+                src={modalContent.src}
+                controls
+                autoPlay
+                className="w-full max-h-[90vh] rounded"
+              />
+            )}
+
+            {modalContent.type === "youtube" && (
+              <iframe
+                src={modalContent.src}
+                title="YouTube Video"
+                className="w-full max-w-3xl h-[80vh]"
+                allowFullScreen
+              />
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -395,11 +493,7 @@ const ProjectMap = forwardRef<
   return (
     <section ref={ref} className="mt-6 bg-white p-6 rounded shadow-sm">
       <h3 className="text-lg font-semibold mb-4">Location</h3>
-      <MapContainer
-        center={coords}
-        zoom={13}
-        style={{ height: "24rem", width: "100%" }} // bigger map
-      >
+      <MapContainer center={coords} zoom={13} className="sticky h-100 w-full ">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
