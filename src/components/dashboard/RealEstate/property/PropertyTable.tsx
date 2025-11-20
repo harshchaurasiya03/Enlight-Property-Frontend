@@ -16,8 +16,10 @@ export default function PropertyTable() {
 
   const [search, setSearch] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const [editingProperty, setEditingProperty] = useState<Partial<Property> | null>(null);
+  const [editingProperty, setEditingProperty] =
+    useState<Partial<Property> | null>(null);
   const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
+  const [deleteTarget, setDeleteTarget] = useState<Property | null>(null);
 
   useEffect(() => {
     dispatch(fetchProperties() as any);
@@ -27,9 +29,8 @@ export default function PropertyTable() {
     setExpandedIds((p) => ({ ...p, [id]: !p[id] }));
   };
 
-  const handleDelete = (id: string) => {
-    if (!confirm("Delete this property?")) return;
-    dispatch(deletePropertyById(id) as any);
+  const handleDelete = (id: string, p: Property) => {
+    setDeleteTarget(p);
   };
 
   const filtered = properties.filter((p) => {
@@ -45,11 +46,10 @@ export default function PropertyTable() {
 
   const ASSET_URL = import.meta.env.VITE_ASSET_URL || "";
 
-const getMediaUrl = (url?: string) => {
-  if (!url) return "";
-  return url.startsWith("http") ? url : `${ASSET_URL}${url}`;
-};
-
+  const getMediaUrl = (url?: string) => {
+    if (!url) return "";
+    return url.startsWith("http") ? url : `${ASSET_URL}${url}`;
+  };
 
   return (
     <div className="p-6">
@@ -104,7 +104,10 @@ const getMediaUrl = (url?: string) => {
                     <td className="p-3">{p.propertyId || p._id}</td>
                     <td className="p-3">
                       <img
-                      src={getMediaUrl(p.images?.[0]?.url) || "/images/property-placeholder.jpeg"}
+                        src={
+                          getMediaUrl(p.images?.[0]?.url) ||
+                          "/images/property-placeholder.jpeg"
+                        }
                         alt={p.title}
                         className="w-20 h-16 object-cover rounded-md"
                       />
@@ -125,11 +128,12 @@ const getMediaUrl = (url?: string) => {
                         ✎
                       </button>
                       <button
-                        onClick={() => handleDelete(p._id)}
+                        onClick={() => handleDelete(p._id, p)}
                         className="px-3 py-1 rounded bg-red-500 text-white"
                       >
                         🗑
                       </button>
+
                       <button
                         onClick={() => toggleExpand(p._id)}
                         className="px-3 py-1 rounded bg-gray-200"
@@ -157,9 +161,11 @@ const getMediaUrl = (url?: string) => {
                             </div>
                             <div>
                               <strong>City/State:</strong>
-                              <p>{p.city}, {p.state}</p>
+                              <p>
+                                {p.city}, {p.state}
+                              </p>
                             </div>
-                            
+
                             <div>
                               <strong>Country:</strong>
                               <p>{p.country}</p>
@@ -170,10 +176,18 @@ const getMediaUrl = (url?: string) => {
                               <ul className="list-disc ml-6">
                                 <li>BHK: {p.features?.BHK ?? "-"}</li>
                                 <li>Area: {p.features?.area ?? "-"} sq.ft</li>
-                                <li>Parking: {p.features?.parking ? "Yes" : "No"}</li>
-                                <li>Furnished: {p.features?.furnished ?? "-"}</li>
-                                <li>Bathrooms: {p.features?.bathrooms ?? "-"}</li>
-                                <li>Balconies: {p.features?.balconies ?? "-"}</li>
+                                <li>
+                                  Parking: {p.features?.parking ? "Yes" : "No"}
+                                </li>
+                                <li>
+                                  Furnished: {p.features?.furnished ?? "-"}
+                                </li>
+                                <li>
+                                  Bathrooms: {p.features?.bathrooms ?? "-"}
+                                </li>
+                                <li>
+                                  Balconies: {p.features?.balconies ?? "-"}
+                                </li>
                               </ul>
                             </div>
 
@@ -182,12 +196,17 @@ const getMediaUrl = (url?: string) => {
                               <div className="flex gap-2 flex-wrap mt-2">
                                 {p.amenities?.length ? (
                                   p.amenities.map((a) => (
-                                    <span key={a} className="px-2 py-1 bg-blue-100 rounded text-xs">
+                                    <span
+                                      key={a}
+                                      className="px-2 py-1 bg-blue-100 rounded text-xs"
+                                    >
                                       {a}
                                     </span>
                                   ))
                                 ) : (
-                                  <span className="text-sm text-gray-500">No amenities</span>
+                                  <span className="text-sm text-gray-500">
+                                    No amenities
+                                  </span>
                                 )}
                               </div>
                             </div>
@@ -207,16 +226,16 @@ const getMediaUrl = (url?: string) => {
                                 ) : (
                                   <span>No images</span>
                                 )}
-                                {p.videos?.length ? (
-                                  p.videos.map((v, idx) => (
-                                    <video
-                                      key={idx}
-                                      src={getMediaUrl(v.url)}
-                                      className="w-40 h-24 object-cover rounded"
-                                      controls
-                                    />
-                                  ))
-                                ) : null}
+                                {p.videos?.length
+                                  ? p.videos.map((v, idx) => (
+                                      <video
+                                        key={idx}
+                                        src={getMediaUrl(v.url)}
+                                        className="w-40 h-24 object-cover rounded"
+                                        controls
+                                      />
+                                    ))
+                                  : null}
                               </div>
                             </div>
                           </div>
@@ -231,27 +250,48 @@ const getMediaUrl = (url?: string) => {
                             </div>
                             <div>
                               <strong>Available From:</strong>{" "}
-                              {p.availableFrom ? format(new Date(p.availableFrom), "yyyy-MM-dd") : "-"}
+                              {p.availableFrom
+                                ? format(
+                                    new Date(p.availableFrom),
+                                    "yyyy-MM-dd"
+                                  )
+                                : "-"}
                             </div>
                             <div>
                               <strong>Owner:</strong>
                               <div>{p.owner?.name}</div>
-                              <div className="text-sm text-gray-600">{p.owner?.email}</div>
+                              <div className="text-sm text-gray-600">
+                                {p.owner?.email}
+                              </div>
                             </div>
                             <div>
                               <strong>Geo (lng, lat):</strong>
-                              <div>{p.location?.coordinates ? `${p.location.coordinates[0]}, ${p.location.coordinates[1]}` : "-"}</div>
+                              <div>
+                                {p.location?.coordinates
+                                  ? `${p.location.coordinates[0]}, ${p.location.coordinates[1]}`
+                                  : "-"}
+                              </div>
                             </div>
                             <div>
                               <strong>Slug:</strong> {p.slug}
                             </div>
                             <div>
                               <strong>Created At:</strong>{" "}
-                              {p.createdAt ? format(new Date(p.createdAt), "yyyy-MM-dd HH:mm") : "-"}
+                              {p.createdAt
+                                ? format(
+                                    new Date(p.createdAt),
+                                    "yyyy-MM-dd HH:mm"
+                                  )
+                                : "-"}
                             </div>
                             <div>
                               <strong>Updated At:</strong>{" "}
-                              {p.updatedAt ? format(new Date(p.updatedAt), "yyyy-MM-dd HH:mm") : "-"}
+                              {p.updatedAt
+                                ? format(
+                                    new Date(p.updatedAt),
+                                    "yyyy-MM-dd HH:mm"
+                                  )
+                                : "-"}
                             </div>
                           </div>
                         </div>
@@ -270,6 +310,37 @@ const getMediaUrl = (url?: string) => {
         onClose={() => setOpenModal(false)}
         initial={editingProperty || undefined}
       />
+      {deleteTarget && (
+      <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
+        <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
+          <h2 className="text-lg font-semibold mb-2">Delete Property</h2>
+
+          <p className="text-sm text-gray-600 mb-4">
+            Are you sure you want to delete 
+            <strong> {deleteTarget.title}</strong>? This action cannot be undone.
+          </p>
+
+          <div className="flex gap-3 justify-end">
+            <button
+              onClick={() => setDeleteTarget(null)}
+              className="px-4 py-2 bg-gray-300 rounded-md flex-1"
+            >
+              Cancel
+            </button>
+
+            <button
+              onClick={() => {
+                dispatch(deletePropertyById(deleteTarget._id!) as any);
+                setDeleteTarget(null);
+              }}
+              className="px-4 py-2 bg-red-600 text-white rounded-md flex-1"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      )}
     </div>
   );
 }
