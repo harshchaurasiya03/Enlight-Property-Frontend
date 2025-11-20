@@ -44,7 +44,7 @@ import NewsPropertyDashboard from "./pages/Dashboard/homeListing/NewsPropertyDas
 import ThailandSecretsDashboard from "./pages/Dashboard/homeListing/ThailandSecretsDashboard";
 import Blog from "./pages/blog/Blog";
 import BlogDetails from "./pages/blog/BlogDetails";
-import CityProperty from "./pages/Properties/CityProperty";
+import CityProperty from "./pages/home/CityProperty";
 import BlogDashboard from "./components/dashboard/BlogDash/BlogDashboard";
 import CustomerManagement from "./components/dashboard/Management/CustomerManagement";
 import LoginPopupDashboard from "./pages/Dashboard/homeListing/PopupDashboard";
@@ -57,7 +57,7 @@ import Categories from "./components/dashboard/RealEstate/Categories";
 import Reviews from "./components/dashboard/RealEstate/Reviews"
 import Subscription from "./pages/Dashboard/subscription/Subscription"
 import BlogTag from "./components/dashboard/BlogDash/BlogTag";
-import AmenitiesProperty from "./pages/Amenities/AmenitiesProperty";
+import AmenitiesProperty from "./pages/Properties/AmenitiesProperty";
 import AmenitiesHome from "./components/home/AmenitiesHome";
 
 
